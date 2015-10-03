@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project title="API Documentation" version="2.8.5">
+  <partials/>
+  <file path="Providers/ConsoleServiceProvider.php" generated-path="Providers.ConsoleServiceProvider.html" hash="a9393fa16ce4dba69d6e021140126cd5" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJydkVFLwzAQx9/zKfIgVItrVfDFOZXtSVEQHb5YH4701kbTpF6ysiF+d5OunSKrD4ZAQu7+98v/7vyyLmvGNFRoaxDIHyCXIrsFggbVzfsSaf0ESubgpNHZPZlG5kh2zNjSIp/BYoFSg8M8m2KDBAVmM6OtUfiI1EiBvYSD5VOw2EX7Z18ojWMW83kpLffblb7szgoJC3lXsHSlId6tHz8IQWHqNcmidD6yve6LA35ydHx6+Dtb+era22hX6Vxtz9LUqZwUFqASYaq0S0kr6UZ9+t31PKh9v9683436z76xOGVCgbUDzjiuHOp8Z4PYBwv1Q5NakAc34O1bR1IX3VvanjUZh8J743vfA53waPO3waH2A4v8LP6BqgkXchU4FDiJ2mBGry1n1GxBoZ8VeJvJIAmIYD0E6uUe9cz6+UcOrYv8ZXLBowGH85DSKl7G7JN9AcUi8lU=</source>
+  </file>
+  <file path="Console/LaravelJqueryValidationTestCommand.php" generated-path="Console.LaravelJqueryValidationTestCommand.html" hash="288783493ad4132fab46bfe09405545d" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJydkU1PwzAMhu/5FT5M6lap7M74EhMXxAlNnHoxidsGpWnJR1WE9t9J0o4vDYTwxUr8vvaT+Oyyb3rGNLZke+QE9ygkL+/Q4EDq9tmTeXlAJQU62ely22nbKdow5i3BFquKpEZHorymgQzWFCRti1oECVdoLfzQakfWzVKg0ZEWFuYze2UQYp3nKUMOu4YgIkJUW1mHkd4QdBW4UOETVMjJfjK7DuarAQ2AdUbqer5bp9ybzhEP8LD46HkOmZqIi6eEXAzvzKcuQGfhZUfwvkGAIMuN7KPtP0Cf7L8iQUQ6DD2CdjMS947+9E+Gwg9ogFaOJL6C+UclOVRe8zS0CXZFy1UqTtuKsXCNtMWFkpqWWVxwttqk4p7t2RsiHr2c</source>
+  </file>
+  <file path="LaravelJqueryValidationServiceProvider.php" generated-path="LaravelJqueryValidationServiceProvider.html" hash="a751645d303920a40a0864cbf202b655" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJydUtFKwzAUfc9X3AdhWpxVwZeqOFSEiYLo8MVKydK7NpomMUmLMvbvpu06pboJ5iUh99xzzj3JyZnONSGSFmg1ZQj3NOUsvqGGViiu30o0H49U8JQ6ruQxIaVFuKCzGXJJHabxOVZoaIbxA5qKM7wzquIpGg8Ng4AEMMkRCsol2BYAeokgdXVES5crA8v1jbkuMqU/DM9y5yur4zbbgcP9g6PdPlp4duntNSt3TtsoDJ1IjcCMij2minAJCQvuhh38djypu/30r36OtntjCiQICRPUWlgD6EUB+O5QphZ692ROai2fh0PmZ4CtlBs4hSS5HN8niU+wV2ZKznh2xQVaD3uCgalt7onWxfClsTGsVj4G8PyTpIu/oSBd8PGvb9odesajqBl/96t7Y15x12fjCyWtEmv4GjrvuN7qv9NQBzAfcZmj4S5VbLG8DNupyql/RJiVktU6MFXKbe80pfnK2xbV2o+qqUHpoqjFtCIL8n8tgxm3Ds1fel+4TnNBPgHfjBtZ</source>
+  </file>
+  <package name="Default" full_name="Default"/>
+  <package name="global" full_name="global"/>
+  <deprecated count="0"/>
+</project>

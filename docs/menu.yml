@@ -1,0 +1,4 @@
+menu:
+  - name: Overview
+    icon: fa fa-eye
+    page: index

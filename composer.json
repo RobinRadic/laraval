@@ -1,0 +1,30 @@
+{
+    "name": "radic/laravel-jquery-validation",
+    "description": "",
+    "authors": [
+        {
+            "name": "Caffeinated",
+            "email": "test@email.nl",
+            "homepage": "https://github.com/Caffeinated"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=5.5.9",
+        "caffeinated/beverage": "~3.0"
+    },
+    "require-dev": {
+        "caffeinated/dev": "dev-master@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Radic\\LaravelJqueryValidation\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Radic\\Tests\\LaravelJqueryValidation\\": "tests/"
+        }
+    }
+}
