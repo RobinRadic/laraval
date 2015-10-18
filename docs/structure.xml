@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project title="API Documentation" version="2.8.5">
   <partials/>
+  <file path="Http/routes-demo.php" generated-path="Http.routes-demo.html" hash="973df3adcd4120764ec1df8d9a06eaba" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJx9kUFPAyEQhe/8Cg5NWBI3TTxubWuiF69e1WyQnVYaCjjA2sb432V2q3FjWg4wvLz5eMDNOrwFxjbZ6WS8420He//gQk7VzHRXfIbZQuRLLkTZpGMAqhMcEu2tegVbBJetleyT8TJ+RRNb0qtRkHzNA8K2RQhWaajE/LmdF4jgZcp6YzAOZ0rJmxNkMQARUkbHewMflbAKVQ+23r1nwGPdK2s6RcmbxlDqwtJ+H5ROlTAd4YcLUEHhaR3QQsp6heA6wEou2Bdjjz4naJotlE7K9SRUFHy5Kg1eK0udOcJJui+vdOddQm8t4O3oeCmgCUXt1GFCOgnnQYPhDyf4+C9OTB7hImV0EGaah/72esL6Uc6zRgexvgGZXatV</source>
+  </file>
+  <file path="Http/routes.php" generated-path="Http.routes.html" hash="d1337d098fe113756a497a7ab1226882" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJyzsS/IKODiCsovLUm1sirILy7RUNdX11GIVk8sVlewtVNQT8xKrNArS8zJTEksSQXKqJcWp0KlHIFSYRCZzPw85/y8kqL8nJzUIge48lhNay4ABRogHw==</source>
+  </file>
+  <file path="Http/Controllers/Demo/DemoController.php" generated-path="Http.Controllers.Demo.DemoController.html" hash="1caf0ec562ff6c595e27d5d9c774e03c" package="Default">
+    <docblock line="0">
+      <description>Part of the Caffeinated PHP packages.</description>
+      <long-description>MIT License and copyright information bundled with this package in the LICENSE file</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <source>eJzVVV1P2zAUfc+v8ANSU9SSthPSVAabBkxjYhNiaC8rqi7xbWPm2MF2Cojy3+c4zkdbKNLeFlWKa59z77kfvvnwMUuyINrdDcguuQBliJwRkyA5htkMmQCDlFx8vSAZxH9gjnrPAgvs97Mrcs5iFBoJCEpimT0qNk8MYWImVQqGSUFuckG5tXDPTGLNMl3ZsSjn5vzs+PTHz1MyYxyt2SgQkKK2ICSXQFk8OQcFC+Tf7nJUj7+AM+osT74ak02OpTBKco5KT04wlQdBkFs9Z5znqdM++SKtgpLRIvsl6ku0drXRB+s8Z96fbhxeytwwMW+5LyHbFTs0xEaXCOBWrU/8VZEZ+ysyUsTRGK7S/anKm3+2unIEyE0iVYVfqecJLsgVQupwTeFKXP03jLtkNBju99pcR+G+7v5JbK70OIoMp4rjHPheLNPIg6KUmX5FaDWNK3bMQeu1iAk+GBRUk2YreAoKP0WKX6icO3OJLB4rbwGKTLbXwldg+QZso2TeR+TemZIG4yKhO7d3DesVRaAUPL7GVzlHTQ7J76BKascww7FDDo9IR9lYmUK6TOFhPNxfAs8SmIo87fQa/I2kjx2yiR/tVwQKOmkzbrUUpQO3ap2wrNy379aubb81PTdo7hHFePi+926wtIJQsXhVlBJrnKJ6S5gZVONhNIxGg8GgzaAM6esMZ69tvxQwdS1R0mpN3nivXAwHzo4lN2xMgfE1Z+Vey0Wu1iHFTjtZegrUTgbvXkqOsCLSNhBb4OqxO71uWoWcCW1AGFYE4uaAuxu+X+pGymwbpm8190bXrvbnag/mN/ZyklkuYjewp9NYWiUqj01Ys3m56DrGUx3YTjHQ+0f+1HZvBTxwkOfgRQ9cxsDDdVsKTa4EWTC8Dzu8DKx/6yLrL2rp4zG1s6LTa90Tl2Hv16V4VVX/CG7hIfSb7pp1a+51d6tSx/wfhGojFYZ+ItphUi5eKZcXiWGF65EVpwfNBYmiiFJaaqpRqJRUn2EedttQnxb7ydSZbSAcj4uZEr7Eaaz7U53I+3B7hEU2R3Ut/qkYo81quIDbtXAbL2T9OfgLfVbMFA==</source>
+  </file>
+  <file path="Http/Controllers/AjaxValidationController.php" generated-path="Http.Controllers.AjaxValidationController.html" hash="6984195849b9ac2876dc9d8027016183" package="Default">
+    <docblock line="0">
+      <description>Part of the Caffeinated PHP packages.</description>
+      <long-description>MIT License and copyright information bundled with this package in the LICENSE file</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <source>eJylVWtv0zAU/Z5fcZGQmkzNAkh8YSwwxhCbNjSViS/rNHmJ03pz7GA7ZRXsv2O7zmN1swdElZrHuefee861/f5DNa+CZGsrgC04RUIBL0DNMeyjosCEIYVzOP16ChXKbtAMy20NNNiTwzM4JhlmEgNiOWS8WgoymysgrOCiRIpwBlc1y6lm+EXUXNMS2fBolE1zfLh/8O37ARSEYk2bBAyVWGoQhgnKSTY9RgItMD36WWOx/IEoyS3z9KtS1XSfMyU4pVjInSCodSmHlNalLXv1EWVKTie8VoTNphPNzHXBX/RbLpY7wxG9RA4MSEL39lkM7pYLD26bmGDdm1Tex6bqrkndo3PqzEipf0bCvWt022Xr0I1THxvJ3fWgrjYA1WrORYO/Nwqf8QLOMCotrvN8hWsfwyyCN69evx33Y20IdSPjrrkWQL5LEkVzQfEM0e2Ml4kDJSVRcRPQmzc7JxlFUg72DvhWYZZL6F4FvwOT0QpoLl3MAgmYPtH/P32g/9lxJva/ElzhzMj1cuGPzDPKGBjcoWRifb7XUw3KlekwJWoTtu3AbXmVnpTyyTqtfPX7fhLdQL9eZ/cFqK/0kEBRs8zuOZeXbTeht2I3VDaGx9JFNs9qfmx3ZieLU48Jdjcavha2Rm6CPOMM/M6zz3Hjxx3qbyyG3t60eIFVLZgfcCQ5a7R4UOKmkHA9hafUotn7TJsDssVpiW5w2AbZQEcYpzOswpHGo1E0fggiaorlIxh9tEhziI3GcH4RtcjIrRQXsRKgKzgTWPfajVIjUdh1F3UuO3FbniEzh1j/cfm1h0xP8/8wvN1UWs8HVdiU2ZuDnqrn9xwa2ZgR7KbwokcQpwUiVIZrfo6wEFxIC++DtbsnK28/oVkYxanie0KgZdiZfOFbtHE9xum1ViVsK44aA++Cv+FT+iA=</source>
+  </file>
+  <file path="Laraval.php" generated-path="Laraval.html" hash="fe030115661c17b2a8573bb7ab2b6f24" package="Default">
+    <docblock line="0">
+      <description>Part of the Caffeinated PHP packages.</description>
+      <long-description>MIT License and copyright information bundled with this package in the LICENSE file</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <source>eJyFVttu4zYQffdXsIABSoEvbYG+OE16SXfRLLJBug36YhsGI41sZqnLkpSToLv/3uFFMiXZrhAgMnnmwjNnhvr5l2pXjeYXFyNyQR6Y1KTMiN4BuWFZBrxgGlLy8OcDqVjymW1BzRBosB9vH8kdT6BQQFiRkqSs3iTf7jThRVbKnGleFuSpLlKBHl643qFbrho/iLJh7m5v3t3//Y5kXAC6nY8KloNCEJBPLOXJ6o5Jtgfx4UsN8u0fJnhqPV+ORrXqZLn6HfYg0fXqNykvT+++x0jqTWnIz4AemN657bNZrG7KQkuWaOUQTBCmyIe/DogGgPl6kh8NC/hnTh8iG2J/bRjyz9kErAGr9a6UDb5TuT9gTx6B5RZ3KJHDtT+jJCY/fv/DT5PQ1poIX2H/7LSu1GI+1yKVArZMzJIyn3vQPOd62hgE8rBlTQRTijQk8bwSkEOhj5M1+ndkolWy1JCYY4x5wTVHnIIUmTSblk3zYJZ7JgmTkr35lXnfHCWljHhP2K7+Ryin3GaBQ3JbKM0KzFKDK647cmNVPyE1JKuLxDbGZpOUaCDrREeHQMZlbPGOAfOMTdtMrwMGyBXJmFBw2cdkCrdsVr0NUbL0o+cgit32t9HRxEycaIwdjB3o4/Qz4hmJvjuS1tevpDG8uiJ4NogDq5NnMUDPY/NI0LUsyJ7DS0SFk/702Wp/um/lslgYR3RClh1j81Buq5EAJVfXLuxkCGpkYUHPqiw2UCRlChHaap4sFplgWkMR+bwbfBwfcYb1zPiW4mvPmTfegr6xkCiOO9breHotoUhBNqVx5emRQWlbt54OXbaHErZZ256YkHElocIAyDWlA3lJULXQRjnLdVAGLCSwZEe8FzPXxp/hzdKJJRjW1qiCq41FRx7Sx/QCWuwmB7lFlvzyhAzIt74Ox5iZPGZ0Q+OALssMAVTrmZDLjou1aRbru+cmqEG/CI2nTgsF4yRsNL/WTpoKdZy7M2NK8Iqj7q5MmGiRDQTHAi+2ZCxYsVXmJmr39U6WL4qsboWoczuvghvoMEbs632p35d4/b57TaByd4X1cnwedSaEy7GTopEHWU+CpIyakI2yxoZXc7M81Fa3bZyPYDhZXwfiu4JYEtdREWVVNRM2DRrbHMLEsPspFBS76PKIdl0Eo13zNhhHlTuHOc5i8VzyIjqcz591Quhh4szwY4n2VNc4eWIKNuY9sis9lOmOdkpPr+GVK6088miXDKhz3KB+BX4c4f+klorvoT+bJiQIgzPnE3ypuYQm1GmpHxc0e2av54Q8lnUoYN8mTsFnBWccR6EPp46+hOZzcmb+GyczvwD9Xg1ncPeGoDYgtZq79uG7Ex2vBvymSv00pyYO7SE6834441vw+vx9a4V9hogTdWkj9YvjD5/zV/MJFxagvS/a2P10g851p8NUmiY8WQV6tPGc2RKpLmttuF7bLuSpY9ws3uOX/qAjh3ZLa2WGtV2KAuPwthxMauep4f7b6D8L3sLu</source>
+  </file>
+  <file path="ValidationServiceProvider.php" generated-path="ValidationServiceProvider.html" hash="d716a795009b15bb8b8700dd812cf671" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJytU11v0zAUffevuA+TulUrASReMgYTm5CGhoTKxAtB1Z1zmxhcO9g3ganqf8d1kmZ0ayc+/GT7nnPu8bH98nVVVkIYXJCvUBJMMVcyu0KHDel332tyt59QqxxZWXMiRO0JznE+J2WQKc/eUEMOC8o+kmuUpA/ONionF6DJeCxgDNclwQKVAd8ioOogobiun2HNpXXQjTvisSptdetUUXJb3awO5RE8f/rsxfE9hg5NTLDZjpK58mmSsM6dpgL1E2kXSYdJFoonPf795XXkhxy+hRN1/L2BBHwipEbvYdjcSgLoJ5PJPWzti6VY64c0mGTwDge5cnAKs9nF5XQ2CwFulaU1c1W8VZp8gH2GkW5NTb5GV5Nm42AEX+7TG0U/LpTruOuVH8Hpqz+VCWclHnTi8q+E+mcQhUR//dmDj6ufbEWYpjH744G997aynuezc2u81f9Pb2pr3qEWxXaf/+5don4wKa9MoYmD5d+iGjgh/Kt2/kjPYB097ZEJubBDyT7bIRgn8WevxxiWZ8qU5BTnVq66zaRtW9+EnwXz2sh1WHBjLR8exdJy0/wAqyq4qdCR4TRtMSexvPqHXo4K5ZncY/0GXN9zJX4BKzuazw==</source>
+  </file>
   <file path="Providers/ConsoleServiceProvider.php" generated-path="Providers.ConsoleServiceProvider.html" hash="a9393fa16ce4dba69d6e021140126cd5" package="Default">
     <docblock line="0">
       <description></description>
@@ -11,6 +68,17 @@
       <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
     </parse_markers>
     <source>eJydkVFLwzAQx9/zKfIgVItrVfDFOZXtSVEQHb5YH4701kbTpF6ysiF+d5OunSKrD4ZAQu7+98v/7vyyLmvGNFRoaxDIHyCXIrsFggbVzfsSaf0ESubgpNHZPZlG5kh2zNjSIp/BYoFSg8M8m2KDBAVmM6OtUfiI1EiBvYSD5VOw2EX7Z18ojWMW83kpLffblb7szgoJC3lXsHSlId6tHz8IQWHqNcmidD6yve6LA35ydHx6+Dtb+era22hX6Vxtz9LUqZwUFqASYaq0S0kr6UZ9+t31PKh9v9683436z76xOGVCgbUDzjiuHOp8Z4PYBwv1Q5NakAc34O1bR1IX3VvanjUZh8J743vfA53waPO3waH2A4v8LP6BqgkXchU4FDiJ2mBGry1n1GxBoZ8VeJvJIAmIYD0E6uUe9cz6+UcOrYv8ZXLBowGH85DSKl7G7JN9AcUi8lU=</source>
+  </file>
+  <file path="Providers/RouteServiceProvider.php" generated-path="Providers.RouteServiceProvider.html" hash="11b57a6117a22679b14ebd35ea051c50" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJytld9v0zAQx9/zV9zDpLRVmwASLy0bE1SIooFQN3ihqPKSa+vh2MF2wiq0/52zm/RH0m4CkYfWte++9n2+5/TV63yVB5JlaHKWIExZypPZFdOsRPHhZ4F6/ZUJnjLLlZx91qrkKWozCoLCIEyEKDIumcXZO1XIKuq6yHOl7S56NlWFxWvUJU+wngVmoDE1aoq6PC6Xm3xaDuJeL4AevFUp3oN2s2A2GpBXIrTuQi6pnB9siQCb6Jn/9CussCuloV4B2v4OEwtjLOEGWeaDEpWvNV+uLAXVo07ShRfPnr/sHyb6eEFnkMZtt7I2N8M4tiLVApdMRInK4mo9zrgd1LEfJzdwtRmTRhwkghkDR2HhvUWZtogFvwNXh8finh7crLiBnZ/0g+W54JiCVWBXCImSVishSNQDNMClX9iDamq1BRcYwUQCS1PuzO0Dt07UoHUGurwv0ytYokTNrNKhIQVldyeIKqla8bJkGozVZGs1Fftvss8SSzrn2e705xA+3pDviTU5W1dkwlFTLMVMffp3wdmY8km1ifmNK9IT8xUfa8RW5TntmcHsZH/DmRfS2wSNttASSsXTQ1bFLbUQLAqZuEPDLR2mc6jR9YGb7vApTKO0w6EPrWM2sB5axV2Tuc5Z7+Rev+yMWdD9cRG+txKPrlXuydNvzdkWQN00pb123LeOdZqFxDG1I90Fl8eEWIPAhQXMcrt2HZ5rLGkRVIn6l+aOrjvofvrJqqITOMa44BIrIv7GuPK9+Sc8/v8WZyx/wmG+oPeTkgu+7IRi092DO9/eg3Lb3xFKditw7m5F2O3upbunUh5cLGmQd74dLLonZCasx+cXcHqf4dDtEIX9tgQ5tOD3YS2h3XWMTwodU9gaFjqFM0tvvMHFwT0/yPne32FsMmwAaO2l8WfBNXY0MpEzu+rM5+PJdD6HCMI4imL3uog3TTHwFdO/KXEdHQg97P2uuutJ2p70E4gbbLZkH01rJh2FKVsg/wLiKWZRk1gLlgMVVJfwIfgDOIej7w==</source>
   </file>
   <file path="Console/LaravelJqueryValidationTestCommand.php" generated-path="Console.LaravelJqueryValidationTestCommand.html" hash="288783493ad4132fab46bfe09405545d" package="Default">
     <docblock line="0">
@@ -23,16 +91,13 @@
     </parse_markers>
     <source>eJydkU1PwzAMhu/5FT5M6lap7M74EhMXxAlNnHoxidsGpWnJR1WE9t9J0o4vDYTwxUr8vvaT+Oyyb3rGNLZke+QE9ygkL+/Q4EDq9tmTeXlAJQU62ely22nbKdow5i3BFquKpEZHorymgQzWFCRti1oECVdoLfzQakfWzVKg0ZEWFuYze2UQYp3nKUMOu4YgIkJUW1mHkd4QdBW4UOETVMjJfjK7DuarAQ2AdUbqer5bp9ybzhEP8LD46HkOmZqIi6eEXAzvzKcuQGfhZUfwvkGAIMuN7KPtP0Cf7L8iQUQ6DD2CdjMS947+9E+Gwg9ogFaOJL6C+UclOVRe8zS0CXZFy1UqTtuKsXCNtMWFkpqWWVxwttqk4p7t2RsiHr2c</source>
   </file>
-  <file path="LaravelJqueryValidationServiceProvider.php" generated-path="LaravelJqueryValidationServiceProvider.html" hash="a751645d303920a40a0864cbf202b655" package="Default">
+  <file path="Contracts/Laraval.php" generated-path="Contracts.Laraval.html" hash="9827b5309f56273bd89ba9d18f3dc73d" package="Default">
     <docblock line="0">
-      <description></description>
-      <long-description></long-description>
+      <description>Part of the Caffeinated PHP packages.</description>
+      <long-description>MIT License and copyright information bundled with this package in the LICENSE file</long-description>
       <tag name="package" line="0" description="Default"/>
     </docblock>
-    <parse_markers>
-      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
-    </parse_markers>
-    <source>eJydUtFKwzAUfc9X3AdhWpxVwZeqOFSEiYLo8MVKydK7NpomMUmLMvbvpu06pboJ5iUh99xzzj3JyZnONSGSFmg1ZQj3NOUsvqGGViiu30o0H49U8JQ6ruQxIaVFuKCzGXJJHabxOVZoaIbxA5qKM7wzquIpGg8Ng4AEMMkRCsol2BYAeokgdXVES5crA8v1jbkuMqU/DM9y5yur4zbbgcP9g6PdPlp4duntNSt3TtsoDJ1IjcCMij2minAJCQvuhh38djypu/30r36OtntjCiQICRPUWlgD6EUB+O5QphZ692ROai2fh0PmZ4CtlBs4hSS5HN8niU+wV2ZKznh2xQVaD3uCgalt7onWxfClsTGsVj4G8PyTpIu/oSBd8PGvb9odesajqBl/96t7Y15x12fjCyWtEmv4GjrvuN7qv9NQBzAfcZmj4S5VbLG8DNupyql/RJiVktU6MFXKbe80pfnK2xbV2o+qqUHpoqjFtCIL8n8tgxm3Ds1fel+4TnNBPgHfjBtZ</source>
+    <source>eJx9kEFLxDAQhe/5FXPUohsVvKigUBfcpUrV4mkvYzptg2lS09mVRfzvprF114tDLoHvvTfzrq67phMySQQkkKNncBVwQ5BiVZG2yFRCfpdDh+oNa+pnARzY+0UBmVZkewK0JSjXbb2uGwZtK+dbZO0svK5taYLDh+Ym2Op+8glUjMkW6fzheQ6VNhRspbDYUh8ggicstVpl6HFDZvm+Jr99QaPL6LxKnWWPivtLMa1fDP7hDb7Lxx07rXwzZY/zb0AU4Job5yf+Tye3tIGCsI3c7vgf7vd7oA7h7OT0/GhfGyVm7G6chrnrL6RkU3pDNZqZcq0cIdlqPp4Ee8XHwrRl8tVQWLwEjfgUX+IbE/qX9Q==</source>
   </file>
   <package name="Default" full_name="Default"/>
   <package name="global" full_name="global"/>

@@ -1,0 +1,313 @@
+
+// interfaces
+module validateLaravel {
+    export interface LaravalRule {
+        name?:string
+        params?:string
+        /**
+         * The message for this rule
+         */
+        message?:string
+    }
+
+
+}
+
+
+// plugin
+module validateLaravel {
+
+    /**
+     * Create a rule based on name and params
+     * @param {String} name
+     * @param {String} params
+     * @returns {LaravalRule}
+     */
+    export function createRule(name:string, params:string):LaravalRule {
+        return <LaravalRule> {
+            name: name,
+            params: params
+        }
+    }
+
+    /**
+     * Convert laravel rules string to the LRule
+     * @param rules
+     * @returns {Array<LaravalRule>}
+     */
+    export function convertLaravalRules(rules):Array<LaravalRule> {
+        var conv:Array<LaravalRule> = [];
+        rules.split('|').forEach((rule) => {
+            var name:string = rule,
+                params:string;
+            if (rule.indexOf(':') !== -1) {
+                var data:string[] = rule.split(':', 1);
+                name = data[0];
+                params = rule.slice(rule.indexOf(':') + 1)
+            }
+            conv.push(createRule(name, params));
+        });
+        return conv;
+    }
+
+    /**
+     * Get the type of a form input element (numeric, string, array)
+     * @param el
+     * @returns {string}
+     */
+    export function getValidationElementType(el:HTMLElement):string {
+        var name:string = el.nodeName.toLowerCase();
+        var type:string = 'string';
+        if (name === 'input') {
+            type = el.getAttribute('type') === 'number' ? 'numeric' : 'string';
+        } else if (name === '') {
+
+        }
+        return type;
+    }
+
+
+    export function replaceMessageAttributes(message:string, el:ValidationControl, rule:LaravalRule):string {
+        message = message.replace(':attribute', el.name);
+        el.rules.forEach((rule:LaravalRule) => {
+            if (!defined(rule.params)) return;
+            if (laravelMethods.def(rule.name) === false) {
+                message = message.replace(':' + rule.name, rule.params);
+            } else {
+                var def:string[] = laravelMethods.def(rule.name);
+                rule.params.split(',').forEach((param:string, i:number) => {
+                    message = message.replace(':' + def[i], param);
+                })
+            }
+        });
+        return message;
+    }
+
+    export class ValidationControl {
+        validation:ValidateLaravelWidget;
+
+        /**
+         * The name (attribute) of the element
+         */
+        name:string;
+
+        /**
+         * The id (attribute) of the element
+         */
+        id:string;
+
+        /**
+         * The element (HTMLElement)
+         */
+        element:HTMLElement;
+
+        /**
+         * The element (JQuery)
+         */
+        $element:JQuery;
+
+        /**
+         * The rules for this element
+         */
+        rules:Array<LaravalRule>;
+
+        /**
+         * Boolean representing this element
+         */
+        valid:boolean;
+
+        /**
+         * The type of this element (string, numeric, array)
+         */
+        type:string;
+
+        /**
+         * The error messages for this element (if valid = false)
+         */
+        messages:string[]
+
+        constructor(validation:ValidateLaravelWidget, element:HTMLElement) {
+            this.validation = validation;
+            this.element = element;
+            this.$element = $(element);
+            this.name = this.$element.attr('name');
+            this.id = this.$element.attr('id');
+            this.type = getValidationElementType(element);
+            this.rules = convertLaravalRules(this.$element.data('lvalidate'));
+            this.valid = true;
+            this.messages = [];
+            this.$element.data('validationElement', this);
+        };
+
+        get value():any {
+            return this.$element.val();
+        }
+
+        set value(val:any) {
+            this.$element.val(val);
+        }
+
+        validate():boolean {
+            this.messages = [];
+            this.valid = true;
+            this.rules.forEach((rule:LaravalRule) => {
+                var valid = laravelMethods.get(rule.name)(this, rule);
+                if (kindOf(valid, 'boolean') && valid === false) {
+                    this.valid = false;
+                    this.messages.push(this.validation._getMessage(rule, this))
+                }
+                log('el.rules.forEach rule:', rule, 'valid', valid);
+            });
+
+            this.validation._callStyleMethod('reset', this);
+            if (!this.valid && this.validation.options.styleError) {
+                this.validation._callStyleMethod('error', this);
+            } else if (this.validation.options.styleSuccess) {
+                this.validation._callStyleMethod('success', this);
+            }
+
+            return this.valid;
+        }
+
+        getControls():Array<ValidationControl> {
+            return this.validation._getValidationControls();
+        }
+
+        getControl(val:any, key?:any):ValidationControl {
+            var found:ValidationControl;
+            this.getControls().forEach((el:ValidationControl) => {
+                if (defined(found)) return;
+                if (el[key] === key) found = el;
+            });
+            return found;
+        }
+    }
+
+
+    @widget('validateLaravel')
+    export class ValidateLaravelWidget extends Widget {
+        // Widget overrides
+        public version:string = '1.0.0';
+        public widgetEventPrefix:string = 'validateLaravel.';
+        public options:any = {};
+        public namespace:string = 'laravel.';
+
+        // Own properties
+        public valid:boolean;
+
+        constructor() {
+            super();
+            this.options = defaults;
+        }
+
+        submit(e?:JQueryEventObject) {
+            e.preventDefault();
+
+            this.controls().forEach((control:ValidationControl, i:number) => {
+                control.validate();
+            });
+            return false;
+        }
+
+        serialize():Array<{name:string,value:any}> {
+            return <Array<{name:string,value:any}>> this.element.serializeArray();
+        }
+
+        clearValidation() {
+            this.controls().forEach((control:ValidationControl, i:number) => {
+                this._callStyleMethod('reset', control);
+            });
+        }
+
+        clear() {
+            this.controls().forEach((control:ValidationControl, i:number) => {
+                control.value = '';
+            });
+            this.clearValidation();
+        }
+
+        controls():Array<ValidationControl> {
+            return this._getValidationControls();
+        }
+
+        control(name:string):ValidationControl {
+            return this._getValidationControl($('[name="' + name + '"]').get(0));
+        }
+
+        _create() {
+            log('create', this);
+            validateMethods.addMethods();
+            laravelMethods.addMethods();
+            this.valid = false;
+            this._on(this.element, {
+                submit: this.submit
+            });
+        }
+
+        _getValidationControls():Array<ValidationControl> {
+            return <Array<ValidationControl>>
+                this.element
+                    .find('[data-lvalidate]')
+                    .toArray()
+                    .map(this._getValidationControl.bind(this));
+        }
+
+        _getValidationControl(el:HTMLElement):ValidationControl {
+            var vel:ValidationControl;
+            vel = <ValidationControl> $(el).data('validationElement');
+            if (!vel) {
+                vel = new ValidationControl(this, el);
+
+            }
+            return vel;
+        }
+
+        _getMessage(rule:LaravalRule, el:ValidationControl):string {
+            if (!this.options.messages.hasOwnProperty(rule.name)) {
+                warn('_getValidationMessage for ruleName:', rule.name, ' was not found in ', this.options.messages);
+                return;
+            }
+
+            // get the right message first
+            var message:any = this.options.messages[rule.name];
+            if (kindOf(message, 'object')) {
+                if (message.hasOwnProperty(el.type)) {
+                    message = message[el.type];
+                }
+            } else if (kindOf(message, 'array')) {
+                message = message[0];
+            }
+
+            // transform message :attrs according to the rule and defs
+            if (kindOf(message, 'string')) {
+                message = replaceMessageAttributes(message, el, rule);
+            }
+            return message;
+        }
+
+        _callStyleMethod(name:string, el:ValidationControl) {
+            var styleMethods:{[name:string]:Function} = this.options.styleMethods[this.options.style];
+            styleMethods[name].apply(styleMethods, [el]);
+        }
+
+        _validateOnChangeCallback(e:JQueryEventObject) {
+            this.control(e.target.getAttribute('name')).validate();
+        }
+
+        public _setOption(key:string, value:Object):any {
+            if (key == 'validateOnChange') {
+                this.controls().forEach((el:ValidationControl) => {
+                    if (<boolean> value === true) {
+                        el.$element.on('change', this._validateOnChangeCallback);
+                    } else {
+                        el.$element.off('change', this._validateOnChangeCallback);
+                    }
+                });
+            }
+
+            this._super(key, value);
+        }
+    }
+}
+
+$.validateLaravel = validateLaravel;

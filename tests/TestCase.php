@@ -11,6 +11,6 @@ abstract class TestCase extends AbstractTestCase
      */
     protected function getServiceProviderClass($app)
     {
-        return \Radic\LaravelJqueryValidation\LaravelJqueryValidationServiceProvider::class;
+        return \Radic\LaravelJqueryValidation\ValidationServiceProvider::class;
     }
 }

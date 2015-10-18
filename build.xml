@@ -17,6 +17,7 @@
         <property name="pre-commit.done" value="true"/>
     </target>
 
+
     <target name="lint" description="Perform syntax check of sourcecode files">
         <apply executable="php" failonerror="true">
             <arg value="-l"/>
@@ -40,6 +41,14 @@
             <arg path="${project.basedir}/src"/>
             <arg path="${project.basedir}/tests"/>
         </exec>
+    </target>
+
+
+    <target name="uglifyjs" description="Uglify the javascript assets">
+    <exec executable="uglify" logoutput="true">
+        <arg value="-s resources/assets/jquery-laravel-validation.js"/>
+        <arg value="-o resources/assets/jquery-laravel-validation.min.js"/>
+    </exec>
     </target>
 
     <target name="phpcs" depends="phpcbf" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">

@@ -2,3 +2,5 @@
 composer.phar
 composer.lock
 .DS_Store
+/resources/assets/vendor
+/node-modules

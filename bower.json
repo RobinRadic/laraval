@@ -1,0 +1,25 @@
+{
+  "name": "laravel-jquery-validation",
+  "version": "0.0.0",
+  "authors": [
+    "Robin Radic <robin@radic.nl>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "jquery.validate": "~1.13.0",
+    "jquery-form": "~3.46.0",
+    "jquery-mockjax": "~2.0.1",
+    "bootstrap": "~3.3.5",
+    "jquery-ui": "~1.11.4",
+    "highlightjs": "~8.8.0",
+    "lodash": "~3.10.1"
+  }
+}
