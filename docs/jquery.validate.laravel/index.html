@@ -65,16 +65,68 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="radic-laravel-jquery-validation">Radic Laravel-jquery-validation</h1>
+				<h1 id="laraval">Laraval</h1>
 				<p><a href="https://travis-ci.org/radic/laravel-jquery-validation"><img src="https://img.shields.io/travis/radic/laravel-jquery-validation.svg?&amp;style=flat-square" alt="Build Status"></a>
 					<a href="https://scrutinizer-ci.com/g/radic/laravel-jquery-validation"><img src="https://img.shields.io/scrutinizer/coverage/g/radic/laravel-jquery-validation.svg?&amp;style=flat-square" alt="Scrutinizer coverage"></a>
 					<a href="https://scrutinizer-ci.com/g/radic/laravel-jquery-validation"><img src="https://img.shields.io/scrutinizer/g/radic/laravel-jquery-validation.svg?&amp;style=flat-square" alt="Scrutinizer quality"></a>
 					<a href="https://github.com/radic/laravel-jquery-validation"><img src="http://img.shields.io/badge/source-radic/laravel-jquery-validation-blue.svg?style=flat-square" alt="Source"></a>
 				<a href="https://tldrlegal.com/license/mit-license"><img src="http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="License"></a></p>
-				<p>Radic Laravel-jquery-validation is a package for the Laravel 5 framework.</p>
+				<p>Radic Laraval</p>
+				<ul>
+					<li>You can use the <code>javascript</code> library stand-alone. The provided PHP library is optional.</li>
+					<li>Stand alone can <strong>not</strong> use the <code>database</code> validation rules.</li>
+					<li>Error messages can be imported straight from your <code>Application</code>&#39;s language files. </li>
+					<li>The <code>Laraval</code> PHP library provides more then a few conveinence methods. It also provides the logic for <code>AJAX</code> validation, which enables <em>all</em> validation rule methods.</li>
+					<li>Depends on <code>jQuery</code> and <a href="http://jqueryvalidation.org"><code>jquery.validate</code></a> JS libraries.</li>
+					<li>Multimple demos (local, ajax, etc) provided using Bootstrap 3.</li>
+				</ul>
 				<p>The package follows the FIG standards PSR-1, PSR-2, and PSR-4 to ensure a high level of interoperability between shared PHP code.</p>
-				<h2 id="documentation">Documentation</h2>
-				<p>Tbd</p>
+				<h2 id="quick-overview">Quick Overview</h2>
+				<p><a href="http://rob.rad"><strong>Full documentation here</strong></a></p>
+				<p>By simple including the <code>jquery.validate.js</code> &amp; <code>jquery.validate.laraval.js</code> you will be able to use Laravel&#39;s (5.x) validation rules like this:</p>
+				<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span>
+    <span class="hljs-attribute">name</span>=<span class="hljs-value">"user_email"</span> 
+    <span class="hljs-attribute">type</span>=<span class="hljs-value">"email"</span> 
+    <span class="hljs-attribute">data-laraval</span>=<span class="hljs-value">"required|email|not_in:admin@mysite.com,manager@mysite.com"</span>
+&gt;</span>
+</code></pre>
+				<p>Or simply padding the complete validation rules as json_encoded object to your view and dropping it onto your form:</p>
+				<p><strong>Controller/route handler</strong></p>
+				<pre><code class="lang-php"><span class="hljs-variable">$rules</span> = [
+    <span class="hljs-string">'title'</span>         =&gt; <span class="hljs-string">'required|max:15|alpha_num'</span>,
+    <span class="hljs-string">'body'</span>          =&gt; <span class="hljs-string">'required|max:255|alpha_dash'</span>,
+    <span class="hljs-string">'json'</span>          =&gt; <span class="hljs-string">'json'</span>,
+    <span class="hljs-string">'ip'</span>            =&gt; <span class="hljs-string">'ip'</span>,
+    <span class="hljs-string">'age'</span>           =&gt; <span class="hljs-string">'required|between:18,30|numeric'</span>,
+    <span class="hljs-string">'born'</span>          =&gt; <span class="hljs-string">'required|date|after:1/1/2000'</span>,
+    <span class="hljs-string">'died'</span>          =&gt; <span class="hljs-string">'required|date|after:born'</span>,
+    <span class="hljs-string">'between_dates'</span> =&gt; <span class="hljs-string">'after:1/1/2000|before:1/1/2010|date'</span>,
+    <span class="hljs-string">'user_email'</span>    =&gt; <span class="hljs-string">'required|email'</span>,
+    <span class="hljs-string">'url'</span>           =&gt; <span class="hljs-string">'required|url'</span>,
+    <span class="hljs-string">'is_admin'</span>      =&gt; <span class="hljs-string">'boolean'</span>,
+    <span class="hljs-string">'active'</span>        =&gt; <span class="hljs-string">'boolean'</span>
+];
+<span class="hljs-keyword">return</span> View::make(<span class="hljs-string">'myview'</span>, [
+    <span class="hljs-string">'rules'</span> =&gt; json_encode(<span class="hljs-variable">$rules</span>)
+]);
+</code></pre>
+				<p><strong>myview.blade.php</strong></p>
+				<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">data-laraval</span>=<span class="hljs-value">"{!! $rules !!}"</span> <span class="hljs-attribute">method</span>=<span class="hljs-value">"POST"</span> <span class="hljs-attribute">action</span>=<span class="hljs-value">"{{ url('to-the-moon') }}"</span> &gt;</span>
+    <span class="hljs-comment">&lt;!-- You can still provide rules on the form fields, they will simply extend the form rules --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"user_email"</span> <span class="hljs-attribute">data-laraval</span>=<span class="hljs-value">"not_in:admin@mysite.com,manager@mysite.com"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"email"</span> &gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+</code></pre>
+				<h4 id="unsupported-pure-client-side-mode-validation-methods">Unsupported pure client-side mode validation methods</h4>
+				<ul>
+					<li>Active URL</li>
+					<li>Array</li>
+					<li>Date Format</li>
+					<li>Exists (Database)</li>
+					<li>Image (File)</li>
+					<li>Regular Expression</li>
+					<li>Timezone</li>
+					<li>Unique (Database)</li>
+				</ul>
 				<h2 id="quick-installation">Quick Installation</h2>
 				<p>Begin by installing the package through Composer.</p>
 				<pre><code class="lang-bash">composer require radic/laravel-jquery-validation
@@ -88,19 +140,22 @@
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/_highlight_js_.html">"highlight.js"</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
 						<a href="modules/_jquery_.html">"jquery"</a>
 					</li>
 					<li class=" tsd-kind-module tsd-is-not-exported">
-						<a href="modules/jqueryvalidation.html">JQuery<wbr>Validation</a>
+						<a href="modules/jqueryui.html">JQueryUI</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/validatelaravel.html">validate<wbr>Laravel</a>
+						<a href="modules/demo.html">demo</a>
 					</li>
-					<li class=" tsd-kind-module tsd-parent-kind-module">
-						<a href="modules/validatelaravel.laravelmethods.html">validate<wbr>Laravel.laravel<wbr>Methods</a>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/hljs.html">hljs</a>
 					</li>
-					<li class=" tsd-kind-module tsd-parent-kind-module">
-						<a href="modules/validatelaravel.validatemethods.html">validate<wbr>Laravel.validate<wbr>Methods</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/laraval.html">laraval</a>
 					</li>
 				</ul>
 			</nav>
@@ -108,6 +163,9 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="interfaces/basejqueryeventobject.html" class="tsd-kind-icon">BaseJQuery<wbr>Event<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/ijqueryslimscrolloptions.html" class="tsd-kind-icon">IJQuery<wbr>Slim<wbr>Scroll<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="interfaces/jquery.html" class="tsd-kind-icon">JQuery</a>
@@ -167,10 +225,31 @@
 						<a href="interfaces/jquerysupport.html" class="tsd-kind-icon">JQuery<wbr>Support</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
-						<a href="interfaces/jqueryxhr.html" class="tsd-kind-icon">JQueryXHR</a>
+						<a href="interfaces/jqueryvalidationerrordictionary.html" class="tsd-kind-icon">JQuery<wbr>Validation<wbr>Error<wbr>Dictionary</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
-						<a href="interfaces/validatorstaticmethods.html" class="tsd-kind-icon">Validator<wbr>Static<wbr>Methods</a>
+						<a href="interfaces/jqueryvalidationerrorlistitem.html" class="tsd-kind-icon">JQuery<wbr>Validation<wbr>Error<wbr>List<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/jqueryvalidationoptions.html" class="tsd-kind-icon">JQuery<wbr>Validation<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/jqueryvalidationvalidator.html" class="tsd-kind-icon">JQuery<wbr>Validation<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/jqueryvalidationvalidatorstatic.html" class="tsd-kind-icon">JQuery<wbr>Validation<wbr>Validator<wbr>Static</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/jqueryvalidationvalidatorstaticmethods.html" class="tsd-kind-icon">JQuery<wbr>Validation<wbr>Validator<wbr>Static<wbr>Methods</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/jqueryxhr.html" class="tsd-kind-icon">JQueryXHR</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#jqueryvalidationrulesdictionary" class="tsd-kind-icon">JQuery<wbr>Validation<wbr>Rules<wbr>Dictionary</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#jqueryvalidationshouldvalidatepredicate" class="tsd-kind-icon">JQuery<wbr>Validation<wbr>Should<wbr>Validate<wbr>Predicate</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#_" class="tsd-kind-icon">$</a>

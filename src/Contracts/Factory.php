@@ -16,6 +16,6 @@ namespace Radic\Laraval\Contracts;
  */
 interface Factory
 {
-    public function make($mode, array $rules = []);
+    public function make($strategy, array $rules = []);
     public function extend($name, $classPath);
 }

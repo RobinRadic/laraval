@@ -16,7 +16,7 @@ declare module laraval {
     function bindingWithParam(name: string): (e: HTMLInputElement, r: LaravalRule) => any;
     var ruleBindings: any;
 }
-declare module laraval.ajaxMode {
+declare module laraval.ajaxStrategy {
     function showErrors(errorList: any, errorMap: any): void;
 }
 declare module laraval.validator {
@@ -34,12 +34,6 @@ declare module laraval.validator {
 }
 declare module laraval.validator {
     var methods: any;
-}
-declare module laraval {
-    function hasMimeType(mime: string): boolean;
-    function getMimeByType(mime: string): any;
-    function getMimeByExtension(extension: string): string;
-    var mimeTypes: any;
 }
 declare module laraval {
     var attributeReplacer: string;

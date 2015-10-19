@@ -17,15 +17,9 @@ Route::group([ 'as' => 'ajax.', 'prefix' => 'ajax' ], function () {
     Route::post('validate', [ 'as' => 'validate', 'uses' => 'AjaxDemoController@ajaxValidate' ]);
 });
 
+Route::group([ 'as' => 'builder.', 'prefix' => 'builder' ], function () {
 
-function _demoInput($id, $rules = '', $type = 'text', $label = null)
-{
-    $label = is_null($label) ? preg_replace('/\_/', ' ', ucfirst($id)) : $label;
-
-    return view('laraval::demo.input', compact('id', 'rules', 'type', 'label'))->render();
-}
-
-function _demoFormTitle($title)
-{
-    return '<div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>' . ucfirst($title) . '</h></div></div>';
-}
+    Route::get('/', [ 'as' => 'show', 'uses' => 'FormBuilderDemoController@show' ]);
+    Route::post('/', [ 'as' => 'store', 'uses' => 'FormBuilderDemoController@store' ]);
+    Route::post('validate', [ 'as' => 'validate', 'uses' => 'FormBuilderDemoController@ajaxValidate' ]);
+});

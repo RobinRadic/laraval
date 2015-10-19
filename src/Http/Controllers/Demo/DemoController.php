@@ -50,7 +50,9 @@ class DemoController extends Controller
 
     public function __construct($mode)
     {
+        require_once(realpath(__DIR__ . '/macros.php'));
         $this->laraval = $this->makeLaraval($mode, $this->rules);
+
     }
 
     public function store(Request $request)

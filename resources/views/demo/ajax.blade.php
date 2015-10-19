@@ -18,30 +18,30 @@
 
     <div class="row">
         <div class="col-md-8">
-            {!! _demoFormTitle('general') !!}
-            {!! _demoInput('title') !!}
-            {!! _demoInput('body') !!}
+            {!! Form::demoTitle('general') !!}
+            {!! Form::demoInput('title') !!}
+            {!! Form::demoInput('body') !!}
 
-            {!! _demoFormTitle('dates') !!}
-            {!! _demoInput('born', $laraval->rule('born'), 'date') !!}
-            {!! _demoInput('died', $laraval->rule('died'), 'date') !!}
-            {!! _demoInput('between_dates', $laraval->rule('between_dates'), 'date') !!}
+            {!! Form::demoTitle('dates') !!}
+            {!! Form::demoInput('born', $laraval->rule('born'), 'date') !!}
+            {!! Form::demoInput('died', $laraval->rule('died'), 'date') !!}
+            {!! Form::demoInput('between_dates', $laraval->rule('between_dates'), 'date') !!}
 
             {{--
-            {!! _demoInput('json', $laraval->rule('json'), 'text', 'JSON') !!}
-            {!! _demoInput('ip', $laraval->rule('ip')) !!}
+            {!! Form::demoInput('json', $laraval->rule('json'), 'text', 'JSON') !!}
+            {!! Form::demoInput('ip', $laraval->rule('ip')) !!}
 
-            {!! _demoFormTitle('numbers &amp; integers') !!}
-            {!! _demoInput('integer', 'integer', 'number') !!}
-            {!! _demoInput('digits', 'digits:5', 'number') !!}
-            {!! _demoInput('digits_between', 'digits_between:3,5', 'number') !!}
-            {!! _demoInput('age', $laraval->rule('age'), 'number') !!}
+            {!! Form::demoTitle('numbers &amp; integers') !!}
+            {!! Form::demoInput('integer', 'integer', 'number') !!}
+            {!! Form::demoInput('digits', 'digits:5', 'number') !!}
+            {!! Form::demoInput('digits_between', 'digits_between:3,5', 'number') !!}
+            {!! Form::demoInput('age', $laraval->rule('age'), 'number') !!}
 
 
-            {!! _demoFormTitle('dates') !!}
-            {!! _demoInput('born', $laraval->rule('born'), 'date') !!}
-            {!! _demoInput('died', $laraval->rule('died'), 'date') !!}
-            {!! _demoInput('between_dates', $laraval->rule('between_dates'), 'date') !!}
+            {!! Form::demoTitle('dates') !!}
+            {!! Form::demoInput('born', $laraval->rule('born'), 'date') !!}
+            {!! Form::demoInput('died', $laraval->rule('died'), 'date') !!}
+            {!! Form::demoInput('between_dates', $laraval->rule('between_dates'), 'date') !!}
             --}}
 
         </div>

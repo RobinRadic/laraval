@@ -63,7 +63,7 @@ module laraval {
     };
 }
 
-module laraval.ajaxMode {
+module laraval.ajaxStrategy {
 
     /**
      * @lends JQueryValidationValidator
@@ -109,7 +109,7 @@ module laraval.validator {
         laraval: {
             // server config
             enabled: false,
-            mode: 'local',
+            strategy: 'local',
             dataAttribute: 'laraval',
 
             // mode ajax
@@ -144,8 +144,8 @@ module laraval.validator {
          * @lends JQueryValidationValidator
          */
         export function init() {
-            if(this.settings.laraval.mode === 'ajax') {
-                this.settings.showErrors = ajaxMode.showErrors.bind(this);
+            if(this.settings.laraval.strategy === 'ajax') {
+                this.settings.showErrors = ajaxStrategy.showErrors.bind(this);
             }
             return _init.call(this);
         }
@@ -154,7 +154,7 @@ module laraval.validator {
          * @lends JQueryValidationValidator
          */
         export function form():boolean {
-            if (this.settings.laraval.mode === 'ajax') {
+            if (this.settings.laraval.strategy === 'ajax') {
 
                 this.checkForm();
                 $.extend( this.submitted, this.errorMap );
@@ -187,7 +187,7 @@ module laraval.validator {
          * @lends JQueryValidationValidator
          */
         export function element(element:string|JQuery):boolean {
-            if (this.settings.laraval.mode === 'ajax') {
+            if (this.settings.laraval.strategy === 'ajax') {
                 var o:LaravalOptions = this.settings.laraval;
 
                 var cleanElement:HTMLInputElement = this.clean( element ),
@@ -279,11 +279,11 @@ module laraval.validator {
             o:any = validator.settings.laraval;
 
 
-        if (o.mode === 'local') {
+        if (o.strategy === 'local') {
             $.each(getElementRules(element), function (i:number, rule:LaravalRule) {
                 $.extend(rules, convertRule(element, rule));
             });
-        } else if (o.mode === 'ajax2') {
+        } else if (o.strategy === 'ajax2') {
             var data:any = {
                 __laraval_validate_field_name: element.name
             };
@@ -297,7 +297,7 @@ module laraval.validator {
                 method: 'post',
                 data: data
             };
-        } else if (o.mode === 'ajax2') {
+        } else if (o.strategy === 'ajax2') {
 
         }
 
@@ -319,18 +319,6 @@ module laraval.validator {
 
 // methods
 module laraval.validator {
-    var rulesWithFieldRelations:any = {
-        // rule : param
-        after: 'first',
-        before: 'first',
-        confirmed: 'special',
-        different: 'first',
-        required_if: 'first',
-        required_with: 'all',
-        required_with_all: 'all',
-        required_without: 'all',
-        required_without_all: 'all'
-    };
 
     function dtime(val:any):number {
         return new Date(val).getTime() / 1000;
@@ -372,66 +360,6 @@ module laraval.validator {
     /** @lends JQueryValidationValidator */
     export var methods:any = {
 
-        laraval_ajax: function (value:any, element:HTMLInputElement, param:any) {
-
-            var previous = this.previousValue(element),
-                validator, data;
-
-            if (!this.settings.messages[element.name]) {
-                this.settings.messages[element.name] = {};
-            }
-            previous.originalMessage = this.settings.messages[element.name].remote;
-            this.settings.messages[element.name].remote = previous.message;
-
-            param = typeof param === "string" && {url: param} || param;
-
-            if (previous.old === value && getSize(value, element) !== 0) {
-                return previous.valid;
-            }
-
-            previous.old = value;
-            validator = this;
-            this.startRequest(element);
-            data = {};
-            data[element.name] = value;
-            var xhr:JQueryXHR = $.ajax($.extend(true, {
-                url: param,
-                mode: "abort",
-                port: "validate" + element.name,
-                dataType: "json",
-                data: data,
-                context: validator.currentForm,
-                success: function (response) {
-                    console.log('xhr success', arguments);
-                    var valid = response === true || response === "true",
-                        errors, message, submitted;
-
-                    validator.settings.messages[element.name].remote = previous.originalMessage;
-                    if (valid) {
-                        submitted = validator.formSubmitted;
-                        validator.prepareElement(element);
-                        validator.formSubmitted = submitted;
-                        validator.successList.push(element);
-                        delete validator.invalid[element.name];
-                        validator.showErrors();
-                    } else {
-                        message = response || validator.defaultMessage( element, "remote" );
-                        errors = response;
-                        console.log(errors, message, response);
-                        validator.invalid[ element.name ] = true;
-                        validator.showErrors( errors );
-                        console.log('invalid', element.name, 'pendingRequests', validator.pendingRequest)
-                        if(validator.pendingRequest === 0) {
-                            //validator.showErrors(errors);
-                        }
-                    }
-                    previous.valid = valid;
-                    validator.stopRequest(element, valid);
-                }
-            }, param));
-            //xhr.always(function(){ console.log('xhr always', arguments); })
-            return "pending";
-        },
 
         alpha: function (value:any, element?:HTMLInputElement, param?:string) {
             return this.optional(element) || /^[a-z]+$/i.test(value);
@@ -527,7 +455,7 @@ module laraval.validator {
             return true;
         },
 
-        __mimes: function (value:any, element:HTMLInputElement, params:string[]) {
+        /*__mimes: function (value:any, element:HTMLInputElement, params:string[]) {
             var valid:boolean = false;
             if (element.multiple) {
                 var validCount = 0;
@@ -549,7 +477,7 @@ module laraval.validator {
                 })
             }
             return this.optional(element) || valid;
-        },
+        },*/
 
         min_numeric: function (value:any, element:HTMLInputElement, param:string) {
             return this.optional(element) || _m.min.call(this, value, element, param);

@@ -1,5 +1,5 @@
 {
-  "name": "laravel-jquery-validation",
+  "name": "laraval",
   "version": "1.0.0",
   "description": "Radic Laravel-jquery-validation ====================",
   "main": "Gruntfile.js",
@@ -8,7 +8,12 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "grunt watch",
+    "build": "grunt build",
+    "dist": "grunt dist",
+    "prepare": "npm install && bower install && tsd install",
+    "clean": "rm node_modules .sass-cache .tscache resources/assets/vendor resources/assets/types/vendor resources/assets/*.js* resources/assets/*.css* -r"
   },
   "author": "",
   "license": "MIT",
@@ -28,5 +33,8 @@
     "mockaroo": "^0.1.6",
     "time-grunt": "^1.2.1",
     "typescript": "1.6.2"
+  },
+  "dependencies": {
+    "grunt-bytesize": "^0.1.1"
   }
 }

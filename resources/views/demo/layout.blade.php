@@ -39,6 +39,7 @@
                 <ul class="nav navbar-nav">
                     <li {!! $current === 'local' ? 'class="active"' : '' !!}><a href="{{ route('laraval::demo.local.show') }}">Local</a></li>
                     <li {!! $current === 'ajax' ? 'class="active"' : '' !!}><a href="{{ route('laraval::demo.ajax.show') }}">AJAX</a></li>
+                    <li {!! $current === 'builder' ? 'class="active"' : '' !!}><a href="{{ route('laraval::demo.builder.show') }}">Form Builder</a></li>
                     <li><a href="{{ route('laraval::demo.ajax.show') }}">PHP API</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

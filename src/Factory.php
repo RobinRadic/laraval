@@ -32,11 +32,20 @@ class Factory implements LaravalContract
      */
     protected $files;
 
+    /**
+     * @var \Illuminate\Contracts\Config\Repository
+     */
     protected $configRepository;
 
+    /**
+     * @var \Illuminate\Contracts\Routing\UrlGenerator
+     */
     protected $url;
 
-    protected $modes;
+    /**
+     * @var mixed
+     */
+    protected $strategies;
 
     /** Instantiates the class
      *
@@ -52,7 +61,7 @@ class Factory implements LaravalContract
         $this->configRepository = $configRepository;
         $this->url              = $url;
 
-        $this->modes = $this->config('modes');
+        $this->strategies = $this->config('modes');
     }
 
 
@@ -84,27 +93,49 @@ class Factory implements LaravalContract
     }
 
     /**
-     * Create new validation mode
+     * Create new validation using the given strategy
      *
-     * @param       $mode
+     * @param       $strategy
      * @param array $rules
-     * @return \Radic\Laraval\ValidationMode
+     * @return \Radic\Laraval\Strategies\ValidationStrategy
      */
-    public function make($mode, array $rules = [ ])
+    public function make($strategy, array $rules = [ ])
     {
-        return $this->container->make($this->modes[ $mode ], [
+        return $this->container->make($this->strategies[ $strategy ], [
             'factory' => $this,
             'rules'   => $rules
         ]);
     }
 
-    public function extend($name, $modeClass)
+    /**
+     * Adds a new strategy
+     *
+     * @param $name
+     * @param $strategyClass
+     */
+    public function extend($name, $strategyClass)
     {
-        $this->modes[ $name ] = $modeClass;
+        $this->strategies[ $name ] = $strategyClass;
     }
 
-    public function hasMode($name)
+    /**
+     * Checks if a strategy exists
+     *
+     * @param $name
+     * @return bool
+     */
+    public function hasStrategy($name)
     {
-        return isset($this->modes[ $name ]);
+        return isset($this->strategies[ $name ]);
+    }
+
+    /**
+     * form
+     *
+     * @return \Radic\Laraval\Html\FormBuilder
+     */
+    public function form()
+    {
+        return $this->container->make('form');
     }
 }

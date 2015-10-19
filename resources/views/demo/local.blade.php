@@ -19,62 +19,62 @@
 
     <div class="row">
         <div class="col-md-8">
-            {!! _demoFormTitle('general') !!}
-            {!! _demoInput('title') !!}
-            {!! _demoInput('body') !!}
-            {!! _demoInput('json', '', 'text', 'JSON') !!}
-            {!! _demoInput('ip', $laraval->rule('ip')) !!}
+            {!! Form::demoTitle('general') !!}
+            {!! Form::demoInput('title') !!}
+            {!! Form::demoInput('body') !!}
+            {!! Form::demoInput('json', '', 'text', 'JSON') !!}
+            {!! Form::demoInput('ip', $laraval->rule('ip')) !!}
 
 
-            {!! _demoFormTitle('dates') !!}
-            {!! _demoInput('born', '', 'date') !!}
-            {!! _demoInput('died', '', 'date') !!}
-            {!! _demoInput('between_dates', '', 'date') !!}
+            {!! Form::demoTitle('dates') !!}
+            {!! Form::demoInput('born', '', 'date') !!}
+            {!! Form::demoInput('died', '', 'date') !!}
+            {!! Form::demoInput('between_dates', '', 'date') !!}
 
 
-            {!! _demoFormTitle('numbers &amp; integers') !!}
-            {!! _demoInput('age', $laraval->rule('age'), 'number') !!}
-            {!! _demoInput('integer', 'integer', 'number') !!}
-            {!! _demoInput('digits', 'digits:5', 'number') !!}
-            {!! _demoInput('digits_between', 'digits_between:3,5', 'number') !!}
+            {!! Form::demoTitle('numbers &amp; integers') !!}
+            {!! Form::demoInput('age', $laraval->rule('age'), 'number') !!}
+            {!! Form::demoInput('integer', 'integer', 'number') !!}
+            {!! Form::demoInput('digits', 'digits:5', 'number') !!}
+            {!! Form::demoInput('digits_between', 'digits_between:3,5', 'number') !!}
 
 
 
-            {!! _demoFormTitle('required variations') !!}
-            {!! _demoInput('required_if', 'required_if:title,hello', 'text', 'if') !!}
-            {!! _demoInput('required_with', 'required_with:title,body', 'text', 'with') !!}
-            {!! _demoInput('required_with_all', 'required_with_all:title,body', 'text', 'with all') !!}
-            {!! _demoInput('required_with_all2', 'required_with_all:title,body,unexisting', 'text', 'with all') !!}
-            {!! _demoInput('required_without', 'required_without:title,body', 'text', 'with') !!}
-            {!! _demoInput('required_without_all', 'required_without_all:title,body', 'text', 'with') !!}
+            {!! Form::demoTitle('required variations') !!}
+            {!! Form::demoInput('required_if', 'required_if:title,hello', 'text', 'if') !!}
+            {!! Form::demoInput('required_with', 'required_with:title,body', 'text', 'with') !!}
+            {!! Form::demoInput('required_with_all', 'required_with_all:title,body', 'text', 'with all') !!}
+            {!! Form::demoInput('required_with_all2', 'required_with_all:title,body,unexisting', 'text', 'with all') !!}
+            {!! Form::demoInput('required_without', 'required_without:title,body', 'text', 'with') !!}
+            {!! Form::demoInput('required_without_all', 'required_without_all:title,body', 'text', 'with') !!}
 
-            {!! _demoFormTitle('special') !!}
+            {!! Form::demoTitle('special') !!}
         </div>
 
 
         <div class="col-md-4">
-            {!! _demoFormTitle('Comparing') !!}
-            {!! _demoInput('compare_same', 'same:title', 'text', 'Same') !!}
-            {!! _demoInput('compare_different', 'different:title', 'text', 'Different') !!}
-            {!! _demoInput('compare_in', 'in:foo,boo,da', 'text', 'in') !!}
-            {!! _demoInput('compare_not_int', 'not_in:foo,boo,da', 'text', 'Not in') !!}
+            {!! Form::demoTitle('Comparing') !!}
+            {!! Form::demoInput('compare_same', 'same:title', 'text', 'Same') !!}
+            {!! Form::demoInput('compare_different', 'different:title', 'text', 'Different') !!}
+            {!! Form::demoInput('compare_in', 'in:foo,boo,da', 'text', 'in') !!}
+            {!! Form::demoInput('compare_not_int', 'not_in:foo,boo,da', 'text', 'Not in') !!}
 
-            {!! _demoFormTitle('size') !!}
-            {!! _demoInput('size_string', 'size:5', 'text', 'String') !!}
-            {!! _demoInput('size_number', 'size:5', 'number', 'Number') !!}
-            {!! _demoInput('size_file', 'size:5', 'file', 'File') !!}
+            {!! Form::demoTitle('size') !!}
+            {!! Form::demoInput('size_string', 'size:5', 'text', 'String') !!}
+            {!! Form::demoInput('size_number', 'size:5', 'number', 'Number') !!}
+            {!! Form::demoInput('size_file', 'size:5', 'file', 'File') !!}
 
-            {!! _demoFormTitle('min') !!}
-            {!! _demoInput('min_string', 'min:5', 'text', 'String') !!}
-            {!! _demoInput('min_number', 'min:5', 'number', 'Number') !!}
-            {!! _demoInput('min_file', 'min:5', 'file', 'File') !!}
+            {!! Form::demoTitle('min') !!}
+            {!! Form::demoInput('min_string', 'min:5', 'text', 'String') !!}
+            {!! Form::demoInput('min_number', 'min:5', 'number', 'Number') !!}
+            {!! Form::demoInput('min_file', 'min:5', 'file', 'File') !!}
 
-            {!! _demoFormTitle('max') !!}
-            {!! _demoInput('max_string', 'max:5', 'text', 'String') !!}
-            {!! _demoInput('max_number', 'max:5', 'number', 'Number') !!}
-            {!! _demoInput('max_file', 'max:5', 'file', 'File') !!}
+            {!! Form::demoTitle('max') !!}
+            {!! Form::demoInput('max_string', 'max:5', 'text', 'String') !!}
+            {!! Form::demoInput('max_number', 'max:5', 'number', 'Number') !!}
+            {!! Form::demoInput('max_file', 'max:5', 'file', 'File') !!}
 
-            {!! _demoFormTitle('') !!}
+            {!! Form::demoTitle('') !!}
 
         </div>
 
