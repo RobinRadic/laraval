@@ -18,14 +18,18 @@ Radic Laraval
  
 The package follows the FIG standards PSR-1, PSR-2, and PSR-4 to ensure a high level of interoperability between shared PHP code.
 
-Quick Documentation
+Quick Overview
 -------------
 [**Full documentation here**](http://rob.rad)
 
 By simple including the `jquery.validate.js` & `jquery.validate.laraval.js` you will be able to use Laravel's (5.x) validation rules like this:
 
 ```html
-<input type="text" name="email" data-laraval="required|email|not_in:admin@mysite.com,manager@mysite.com">
+<input 
+    name="user_email" 
+    type="email" 
+    data-laraval="required|email|not_in:admin@mysite.com,manager@mysite.com"
+>
 ```
 
 Or simply padding the complete validation rules as json_encoded object to your view and dropping it onto your form:
@@ -41,10 +45,10 @@ $rules = [
     'born'          => 'required|date|after:1/1/2000',
     'died'          => 'required|date|after:born',
     'between_dates' => 'after:1/1/2000|before:1/1/2010|date',
-    'email'    => 'required|email',
-    'url'      => 'required|url',
-    'is_admin' => 'boolean',
-    'active'   => 'boolean'
+    'user_email'    => 'required|email',
+    'url'           => 'required|url',
+    'is_admin'      => 'boolean',
+    'active'        => 'boolean'
 ];
 return View::make('myview', [
     'rules' => json_encode($rules)
@@ -53,9 +57,9 @@ return View::make('myview', [
 
 **myview.blade.php**
 ```php
-<form method="POST" action="{{ url('to-the-moon') }}" data-laraval="{!! $rules !!}">
+<form data-laraval="{!! $rules !!}" method="POST" action="{{ url('to-the-moon') }}" >
     <!-- You can still provide rules on the form fields, they will simply extend the form rules -->
-    <input type="text" name="email" data-laraval="not_in:admin@mysite.com,manager@mysite.com">
+    <input name="user_email" data-laraval="not_in:admin@mysite.com,manager@mysite.com" type="email" >
 </form>
 ```
 
