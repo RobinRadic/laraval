@@ -56,7 +56,7 @@ return View::make('myview', [
 ```
 
 **myview.blade.php**
-```php
+```html
 <form data-laraval="{!! $rules !!}" method="POST" action="{{ url('to-the-moon') }}" >
     <!-- You can still provide rules on the form fields, they will simply extend the form rules -->
     <input name="user_email" data-laraval="not_in:admin@mysite.com,manager@mysite.com" type="email" >
