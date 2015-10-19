@@ -22,3 +22,5 @@ preupdate(){
 
     git push -u origin "$(git_current_branch)"
 }
+
+$*
