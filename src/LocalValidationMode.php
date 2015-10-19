@@ -57,6 +57,7 @@ class LocalValidationMode extends ValidationMode
     {
         $results = [ ];
 
+
         foreach ($array as $key => $value) {
             if (is_array($value)) {
                 $results = array_merge($results, static::flatten($value, $prepend . $key . '_'));

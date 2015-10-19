@@ -1,6 +1,6 @@
 {
     "name": "radic/laraval",
-    "description": "Laravel 5 JQuery validation using jquery.validate, client-side only or using AJAX",
+    "description": "Laravel 5 jQuery Validation. Full client side, full AJAX, hybrid and other modes. Bootstrap and other frameworks supported.",
     "authors": [
         {
             "name": "Robin Radic",
