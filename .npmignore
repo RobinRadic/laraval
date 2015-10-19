@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+config
+resources/views
+src
+tests
+.scrutinizer.yml
+.travis.yml
+build.xml
+composer.json
+phpunit.xml
+run
