@@ -9,3 +9,9 @@ build.xml
 composer.json
 phpunit.xml
 run
+.tscache
+.sass-cache
+.mversionrc
+bower.json
+.bowerrc
+.editorconfig
