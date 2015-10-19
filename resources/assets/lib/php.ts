@@ -1,6 +1,6 @@
 
 // php methods
-module validateLaravel.phpMethods {
+module laraval.php {
     export function strtotime(text:any, now?:any):number|boolean {
         if(!now){
             now = (new Date()).getTime();

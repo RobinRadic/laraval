@@ -3,4 +3,31 @@
   float: right;
 }
 
+.form-group-title h4 {
+  margin: 0;
+}
+
+.form-actions {
+  max-height: 42px;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  z-index: 9999;
+  background: #E2E2E2;
+  width: 100%;
+  padding: 4px;
+  border-top: 1px solid #A9A4A4;
+}
+
+#content {
+  margin-bottom: 42px;
+}
+
+#demo-code-preview code {
+  margin-bottom: 10px !important;
+  overflow-x: scroll;
+  word-wrap: normal;
+  white-space: pre;
+}
+
 /*# sourceMappingURL=demo.css.map */

@@ -133,7 +133,7 @@ interface JQueryValidationOptions {
      *
      * default: Removes the errorClass
      */
-    unhighlight?: (element:HTMLElement, errorClass:string, validClass:string) => void;
+    unhighlight?: (element:HTMLElement, errorClass?:string, validClass?:string) => void;
     /**
      * This class is added to an element after it was validated and considered valid.
      *
@@ -269,7 +269,8 @@ interface JQueryValidationValidatorStatic {
 
 interface JQueryValidationValidator {
     init():void;
-
+    currentForm?:HTMLFormElement;
+    submitted?:any;
     element(element:string|JQuery): boolean;
     /**
      * Validates the form, returns true if it is valid, false otherwise.
@@ -304,6 +305,14 @@ interface JQueryValidationValidator {
     errorMap: JQueryValidationErrorDictionary;
     errorList: JQueryValidationErrorListItem[];
 
+    invalid:{[name:string]:boolean};
+    pendingRequest?:number;
+    pending?:any;
+    errorContext?:JQuery;
+    successList?:any[],
+    currentElements?:JQuery;
+    containers?:JQuery;
+
 
     checkForm():any ;
     showErrors(errors):any ;
@@ -333,7 +342,7 @@ interface JQueryValidationValidator {
     defaultShowErrors():any ;
     validElements():any ;
     invalidElements():any ;
-    showLabel(element, message):any ;
+    showLabel(element, message?:any):any ;
     errorsFor(element):any ;
     idOrName(element):any ;
     validationTargetFor(element):any ;

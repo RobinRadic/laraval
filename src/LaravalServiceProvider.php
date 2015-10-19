@@ -1,6 +1,6 @@
 <?php
 
-namespace Radic\LaravelJqueryValidation;
+namespace Radic\Laraval;
 
 use Caffeinated\Beverage\ServiceProvider;
 
@@ -10,32 +10,32 @@ use Caffeinated\Beverage\ServiceProvider;
  * @author        Caffeinated
  * @copyright     Copyright (c) 2015, Caffeinated
  * @license       https://tldrlegal.com/license/mit-license MIT
- * @package       Radic\LaravelJqueryValidation
+ * @package       Radic\Laraval
  */
-class ValidationServiceProvider extends ServiceProvider
+class LaravalServiceProvider extends ServiceProvider
 {
     protected $dir = __DIR__;
 
-    protected $configFiles = [ 'laravel-jquery-validation' ];
+    protected $configFiles = [ 'laraval' ];
 
-    protected $viewDirs = [ 'views' => 'laravel-jquery-validation' ];
+    protected $viewDirs = [ 'views' => 'laraval' ];
 
-    protected $assetDirs = [ 'assets' => 'laravel-jquery-validation' ];
+    protected $assetDirs = [ 'assets' => 'laraval' ];
 
     protected $providers = [
         \Caffeinated\Beverage\BeverageServiceProvider::class,
-        \Radic\LaravelJqueryValidation\Providers\ConsoleServiceProvider::class,
-        \Radic\LaravelJqueryValidation\Providers\RouteServiceProvider::class
+        \Radic\Laraval\Providers\ConsoleServiceProvider::class,
+        \Radic\Laraval\Providers\RouteServiceProvider::class
     ];
 
     protected $provides = [ 'laraval' ];
 
     protected $singletons = [
-        'laraval' => Laraval::class
+        'laraval' => Factory::class
     ];
 
     protected $aliases = [
-        'laraval' => Contracts\Laraval::class
+        'laraval' => Contracts\Factory::class
     ];
 
 

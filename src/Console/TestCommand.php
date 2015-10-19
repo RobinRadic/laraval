@@ -1,24 +1,24 @@
 <?php
 
-namespace Radic\LaravelJqueryValidation\Console;
+namespace Radic\Laraval\Console;
 
 use Caffeinated\Beverage\Command;
 
-class LaravelJqueryValidationTestCommand extends Command
+class TestCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var  string
      */
-    protected $signature = 'laravel-jquery-validation:test';
+    protected $signature = 'laraval:test';
 
     /**
      * The console command description.
      *
      * @var  string
      */
-    protected $description = 'laravel-jquery-validation test command';
+    protected $description = 'laraval test command';
 
     /**
      * Execute the console command.

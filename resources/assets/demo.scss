@@ -4,3 +4,41 @@
         float: right
     }
 }
+.form-group-title {
+    h4 {
+        margin: 0;
+    }
+}
+
+$form-actions-height: 42px;
+.form-actions {
+    max-height: $form-actions-height;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    z-index: 9999;
+    background: #E2E2E2;
+    width: 100%;
+    padding: 4px;
+    border-top: 1px solid #A9A4A4;
+}
+#content {
+    margin-bottom: $form-actions-height;
+}
+
+#demo-code-preview {
+    .tab-content {
+
+    }
+    .tab-pane {
+    }
+    pre {
+
+    }
+    code {
+        margin-bottom: 10px !important;
+        overflow-x: scroll;
+        word-wrap: normal;
+        white-space: pre;
+    }
+}

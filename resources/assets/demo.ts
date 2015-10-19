@@ -6,14 +6,10 @@ module demo {
     }
 
     export var jsonFilePath:string;
-    export var $forms:JQuery = $('#demo-form-local, #demo-form-ajax');
-    export var forms:any = {
-        local: null,
-        ajax: null
-    };
+    export var form:Form;
 
-    export function $form(name) {
-        return $('#demo-form-' + name);
+    export function $form() {
+        return $('form');
     }
 
     export function generatedData() {
@@ -22,21 +18,82 @@ module demo {
 
 
     export function init() {
-        var iconLink = new util.FaviconAwesome('fa-github', '#000');
-        demo.$forms.find('[data-lvalidate]').each(function () {
+        //var iconLink = new util.FaviconAwesome('fa-github', '333');
+
+
+        $form().find('[data-laraval]').each(function () {
             var pl = $(this).attr('placeholder'),
-                lv = $(this).data('lvalidate');
+                lv = $(this).data('laraval');
             $(this).attr('placeholder', pl + ' (' + lv + ')');
         });
-
-        demo.forms.local = new Form(demo.$form('local'));
+        form = new Form($form())
     }
 
-    export function setCodePreview(tab:string, code:string, lang:string='json'){
-        var $fs = $('#tab-' + tab + '-data').html('');
-        var $pre = $('<pre>').appendTo($fs);
-        var $code = $('<code>').addClass('hljs lang-' + lang).appendTo($pre);
-        code = hljs.highlight(lang, code).value;
-        $code.html(code)
+    export module CP {
+        var $el:JQuery = $("#demo-code-preview"),
+            $ul:JQuery, $content:JQuery;
+
+        var _tabs:any = {}
+
+        function slug(name:string){
+            return name.toLowerCase().replace(/\s/g, '_');
+        }
+        export function init() {
+            $el.html('');
+            $ul = cre('ul').appendTo($el).addClass('nav nav-tabs').attr('role', 'tablist');
+            $content = cre().appendTo($el).addClass('tab-content');
+            $el.addClass('in');
+        }
+
+        export function get(name:string) {
+            return _tabs['tab-cp-' + slug(name)];
+        }
+
+        export function add(name:string, active:boolean = false) {
+            var id = 'tab-cp-' + slug(name);
+            var $li = cre('li').attr('role', 'presentation');
+            var $a = cre('a').text(name).attr({
+                'href': '#' + id,
+                'role': 'tab',
+                'aria-controls': id,
+                'data-toggle': 'tab'
+            });
+            var $pre = cre('pre');
+            var $panel = cre('div').addClass('tab-pane fade').attr({id: id, role: 'tabpanel'});
+            if (active) {
+                $li.addClass('active');
+                $panel.addClass('in active');
+            }
+            _tabs[id] = {
+                name: name, id: id,
+                a: $a.appendTo($li), li: $li.appendTo($ul), panel: $panel.appendTo($content), pre: $pre.appendTo($panel),
+                codes: {}, getCode: function (name:string) {
+                    return this.codes[slug(name)];
+                }
+            };
+            _tabs[id].addCode = _addCode.bind(_tabs[id]);
+            _tabs[id].setCode = _setCode.bind(_tabs[id]);
+            return _tabs[id];
+        }
+
+        function _setCode(name:string, code:string, lang:string = 'json') {
+            if(this.pre.parent('.slimScrollDiv').length > 0) {
+                this.pre.unwrap();
+                this.panel.find('.slimScrollDiv, .slimScrollBar, .slimScrollRail').remove();
+            }
+            var id:string = slug(name);
+            this.codes[id].code.remove();
+            this.codes[id].code = cre('code').appendTo(this.pre).addClass('hljs lang-' + lang).html(hljs.highlight(lang, code).value)
+            this.pre.slimScroll(<any> { height: 600 });
+            return this;
+        }
+
+        function _addCode(name:string, code:string, lang:string = 'json', showTitle:boolean=false) {
+            var id:string = slug(name);
+            this.codes[id] = { title: cre('h5').appendTo(this.pre).text(name), code: cre('code') };
+            !showTitle && this.codes[id].title.hide();
+            _setCode.call(this, name, code, lang);
+            return this;
+        }
     }
 }

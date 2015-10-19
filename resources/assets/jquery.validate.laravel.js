@@ -30,6 +30,22 @@
   }
 }(this, function ($) {
 
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(["jquery"], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require("jquery"));
+  } else {
+    factory(jQuery);
+  }
+}(this, function ($) {
+
 /**
  * The `validateLaravel` is the
  */
@@ -103,7 +119,7 @@ var laraval;
         }
         return rules;
     }
-    laraval.laravalRuleToValidator = laravalRuleToValidator;
+    laraval.convertRule = laravalRuleToValidator;
     function parseRules(rules) {
         if (rules === void 0) { rules = ""; }
         var conv = [];
@@ -196,7 +212,7 @@ var laraval;
                 var rules = {}, validator = $.data(element.form, "validator");
                 var lrules = laraval.parseRules(laraval.getElementRules(element));
                 $.each(lrules, function (i, rule) {
-                    $.extend(rules, laraval.laravalRuleToValidator(element, rule));
+                    $.extend(rules, laraval.convertRule(element, rule));
                 });
                 return rules;
             }
@@ -251,6 +267,9 @@ Object.keys(exports.methods).forEach(function (name) {
 $.extend(true, $.validator, laraval.extensions.validator);
 $.fn.extend(laraval.extensions.jquery);
 //# sourceMappingURL=jquery.validate.laravel.js.map
+
+
+}));
 
 
 }));

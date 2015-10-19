@@ -1,77 +1,89 @@
 module demo {
     export class Form {
         $el:JQuery;
+        validator:JQueryValidationValidator;
         $btnRandom:JQuery;
         $btnClearValues:JQuery;
         $btnClearValidation:JQuery;
         generated:any[];
+        lastInputEl:JQuery;
 
         constructor($el:JQuery){
             this.$el = $el;
+            this.validator = $el.validate();
             this.$btnRandom = $el.find('.action-random');
             this.$btnClearValues = $el.find('.action-clear-values');
             this.$btnClearValidation = $el.find('.action-clear-validation');
 
-            demo.generatedData().then(function(data){
+            $el.find('.action-validate').on('click', (event:JQueryEventObject) => {
+
+                this.validator.form();
+            });
+
+            $el.find('.action-validate-focused').hide().on('click', (e:JQueryEventObject) => {
+                this.validator.element(this.lastInputEl);
+            });
+
+            this.validator.elements().on('focus', (event:JQueryEventObject) => {
+                this.lastInputEl = $(event.target);
+                $el.find('.action-validate-focused').text('Validate ' + event.target.getAttribute('name')).show();
+            });
+
+            CP.init();
+
+            CP.add('Init', true)
+                .addCode('Init laraval', "{!! $laraval->init($options = []) !!}", 'php', true)
+                .addCode('Generates', codeIndentFix($('script#init-mode').html()), 'javascript', true)
+                .addCode('Then init validation', codeIndentFix($('script#init-script').html()), 'javascript', true);
+
+            demo.generatedData().then((data) => {
                 this.generated = data;
                 this.bindButtons();
-                this.initFormTabContent();
-                this.initControlsTabContent();
-                this.initRulesTabContent();
-            }.bind(this));
 
-        }
-
-        initFormTabContent(){
-            var self = this;
-            demo.setCodePreview('form', JSON.stringify(this.serialize(), null, 4), 'json');
-            demo.forms.local.$el.on('change', function () {
-                demo.setCodePreview('form', JSON.stringify(this.serialize(), null, 4), 'json');
-            }.bind(this))
-        }
-
-        initControlsTabContent(){
-            var self = this;
-            function getControlsData(){
-                this.getControls().map(function(el){
-                    return {
-                    }
-                })
-            }
-            demo.setCodePreview('controls', JSON.stringify(getControlsData.apply(this), null, 4), 'json');
-            demo.forms.local.$el.on('change', function () {
-                demo.setCodePreview('controls', JSON.stringify(getControlsData.apply(this), null, 4), 'json');
-            }.bind(this))
-        }
-
-        initRulesTabContent(){
-            var rules = {};
-            this.getControls().forEach((control:validateLaravel.ValidationControl) => {
-                rules[control.name] = control.$element.data('lvalidate');
+                CP.add('Form').addCode('json', util.JSON.stringify(this.serialize(), null, 4), 'json');
+                this.$el.on('change', () => {
+                    CP.get('Form').setCode('json', util.JSON.stringify(this.serialize(), null, 4), 'json');
+                });
             });
-            demo.setCodePreview('rules', JSON.stringify(rules, null, 4), 'json');
+
+        }
+
+
+        getRules():any {
+            var rules = {};
+            this.validator.elements().each(function() {
+                var _rules:any = $(this).rules();
+                if(typeof _rules !== 'undefined'){
+                    rules[this.name] = _rules;
+                }
+            });
+            return rules;
         }
 
         random(){
             var data = this.getRandomGenerated();
-            this.getControl('json').$element.val(JSON.stringify(data));
+            this.validator.findByName('json').val(JSON.stringify(data));
 
-            this.serialize().forEach(function (control) {
+            this.serialize().forEach((control) => {
                 if ( control.name === '_token' ) return;
-                var $c = this.getControl(control.name).$element;
-                $c.val(data[control.name]);
-                //data[control.name]
-            }.bind(this));
+                var $c = this.validator.findByName(control.name).val(data[control.name]);
+            });
 
             this.$el.trigger('change');
         }
 
         clearValues(){
-            this.$el.validateLaravel('clear');
+            this.$el['clearForm']();
         }
 
         clearValidation(){
-            this.$el.validateLaravel('clearValidation');
+            var self =this;
+            var s = self.validator.settings;
+            this.validator.hideErrors();
+            this.validator.elements().each(function(){
+                self.validator.settings.unhighlight(this);
+                $(this).closest('.form-group').find('.help-block-error').hide();
+            })
         }
 
         bindButtons(){
@@ -89,16 +101,17 @@ module demo {
         }
 
         serialize():JQuerySerializeArrayElement[] {
-            return this.$el.serializeArray();
+            return this.$el.serializeArray().map((el:any) => {
+                var $el = this.validator.findByName(el.name);
+                return $.extend(el, {
+                    type: $el.attr('type'),
+                    rules: $el.rules(),
+                    'data-laraval': $el.data(this.validator.settings.laraval.dataAttribute),
+                })
+            });
         }
 
-        getControl(name:string):validateLaravel.ValidationControl {
-            return <validateLaravel.ValidationControl> this.$el.validateLaravel('control', name);
-        }
 
-        getControls():validateLaravel.ValidationControl[]{
-            return <validateLaravel.ValidationControl[]> this.$el.validateLaravel('controls');
-        }
 
         getRandomGenerated():any {
             var row = Math.round(Math.random() * this.generated.length);

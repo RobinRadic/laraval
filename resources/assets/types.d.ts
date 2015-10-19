@@ -1,6 +1,10 @@
 /// <reference path="types/vendor/tsd.d.ts" />
 /// <reference path="types/jquery.validation.d.ts" />
 
+interface JQueryValidationOptions {
+    laraval: laraval.LaravalOptions
+}
+
 
 interface JQueryValidationValidatorStaticMethods {
     alpha_dash(v:any, e?:HTMLInputElement, p?:string): boolean;

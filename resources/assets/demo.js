@@ -56,6 +56,31 @@ var demo;
         return $(document.createElement(name));
     }
     demo.cre = cre;
+    function codeIndentFix(str) {
+        var fix = function (code, leading) {
+            if (leading === void 0) { leading = true; }
+            var txt = code;
+            if (leading) {
+                txt = txt.replace(/^[\r\n]+/, "").replace(/\s+$/g, "");
+            }
+            if (/^\S/gm.test(txt)) {
+                return code;
+            }
+            var mat, str, re = /^[\t ]+/gm, len, min = 1e3;
+            while (mat = re.exec(txt)) {
+                len = mat[0].length;
+                if (len < min) {
+                    min = len;
+                    str = mat[0];
+                }
+            }
+            if (min == 1e3)
+                return code;
+            return txt.replace(new RegExp("^" + str, 'gm'), "");
+        };
+        return fix(str);
+    }
+    demo.codeIndentFix = codeIndentFix;
 })(demo || (demo = {}));
 var demo;
 (function (demo) {
@@ -174,60 +199,68 @@ var demo;
 (function (demo) {
     var Form = (function () {
         function Form($el) {
+            var _this = this;
             this.$el = $el;
+            this.validator = $el.validate();
             this.$btnRandom = $el.find('.action-random');
             this.$btnClearValues = $el.find('.action-clear-values');
             this.$btnClearValidation = $el.find('.action-clear-validation');
-            demo.generatedData().then(function (data) {
-                this.generated = data;
-                this.bindButtons();
-                this.initFormTabContent();
-                this.initControlsTabContent();
-                this.initRulesTabContent();
-            }.bind(this));
-        }
-        Form.prototype.initFormTabContent = function () {
-            var self = this;
-            demo.setCodePreview('form', JSON.stringify(this.serialize(), null, 4), 'json');
-            demo.forms.local.$el.on('change', function () {
-                demo.setCodePreview('form', JSON.stringify(this.serialize(), null, 4), 'json');
-            }.bind(this));
-        };
-        Form.prototype.initControlsTabContent = function () {
-            var self = this;
-            function getControlsData() {
-                this.getControls().map(function (el) {
-                    return {};
-                });
-            }
-            demo.setCodePreview('controls', JSON.stringify(getControlsData.apply(this), null, 4), 'json');
-            demo.forms.local.$el.on('change', function () {
-                demo.setCodePreview('controls', JSON.stringify(getControlsData.apply(this), null, 4), 'json');
-            }.bind(this));
-        };
-        Form.prototype.initRulesTabContent = function () {
-            var rules = {};
-            this.getControls().forEach(function (control) {
-                rules[control.name] = control.$element.data('lvalidate');
+            $el.find('.action-validate').on('click', function (event) {
+                _this.validator.form();
             });
-            demo.setCodePreview('rules', JSON.stringify(rules, null, 4), 'json');
+            $el.find('.action-validate-focused').hide().on('click', function (e) {
+                _this.validator.element(_this.lastInputEl);
+            });
+            this.validator.elements().on('focus', function (event) {
+                _this.lastInputEl = $(event.target);
+                $el.find('.action-validate-focused').text('Validate ' + event.target.getAttribute('name')).show();
+            });
+            demo.CP.init();
+            demo.CP.add('Init', true)
+                .addCode('Init laraval', "{!! $laraval->init($options = []) !!}", 'php', true)
+                .addCode('Generates', demo.codeIndentFix($('script#init-mode').html()), 'javascript', true)
+                .addCode('Then init validation', demo.codeIndentFix($('script#init-script').html()), 'javascript', true);
+            demo.generatedData().then(function (data) {
+                _this.generated = data;
+                _this.bindButtons();
+                demo.CP.add('Form').addCode('json', demo.util.JSON.stringify(_this.serialize(), null, 4), 'json');
+                _this.$el.on('change', function () {
+                    demo.CP.get('Form').setCode('json', demo.util.JSON.stringify(_this.serialize(), null, 4), 'json');
+                });
+            });
+        }
+        Form.prototype.getRules = function () {
+            var rules = {};
+            this.validator.elements().each(function () {
+                var _rules = $(this).rules();
+                if (typeof _rules !== 'undefined') {
+                    rules[this.name] = _rules;
+                }
+            });
+            return rules;
         };
         Form.prototype.random = function () {
+            var _this = this;
             var data = this.getRandomGenerated();
-            this.getControl('json').$element.val(JSON.stringify(data));
+            this.validator.findByName('json').val(JSON.stringify(data));
             this.serialize().forEach(function (control) {
                 if (control.name === '_token')
                     return;
-                var $c = this.getControl(control.name).$element;
-                $c.val(data[control.name]);
-            }.bind(this));
+                var $c = _this.validator.findByName(control.name).val(data[control.name]);
+            });
             this.$el.trigger('change');
         };
         Form.prototype.clearValues = function () {
-            this.$el.validateLaravel('clear');
+            this.$el['clearForm']();
         };
         Form.prototype.clearValidation = function () {
-            this.$el.validateLaravel('clearValidation');
+            var self = this;
+            var s = self.validator.settings;
+            this.validator.hideErrors();
+            this.validator.elements().each(function () {
+                self.validator.settings.unhighlight(this);
+                $(this).closest('.form-group').find('.help-block-error').hide();
+            });
         };
         Form.prototype.bindButtons = function () {
             this.$btnRandom.on('click', this.random.bind(this));
@@ -240,13 +273,15 @@ var demo;
             this.$btnClearValidation.off('click');
         };
         Form.prototype.serialize = function () {
-            return this.$el.serializeArray();
-        };
-        Form.prototype.getControl = function (name) {
-            return this.$el.validateLaravel('control', name);
-        };
-        Form.prototype.getControls = function () {
-            return this.$el.validateLaravel('controls');
+            var _this = this;
+            return this.$el.serializeArray().map(function (el) {
+                var $el = _this.validator.findByName(el.name);
+                return $.extend(el, {
+                    type: $el.attr('type'),
+                    rules: $el.rules(),
+                    'data-laraval': $el.data(_this.validator.settings.laraval.dataAttribute),
+                });
+            });
         };
         Form.prototype.getRandomGenerated = function () {
             var row = Math.round(Math.random() * this.generated.length);
@@ -265,13 +300,8 @@ var demo;
         $.extend(true, demo, opts);
     }
     demo.extend = extend;
-    demo.$forms = $('#demo-form-local, #demo-form-ajax');
-    demo.forms = {
-        local: null,
-        ajax: null
-    };
-    function $form(name) {
-        return $('#demo-form-' + name);
+    function $form() {
+        return $('form');
     }
     demo.$form = $form;
     function generatedData() {
@@ -279,22 +309,81 @@ var demo;
     }
     demo.generatedData = generatedData;
     function init() {
-        var iconLink = new demo.util.FaviconAwesome('fa-github', '#000');
-        demo.$forms.find('[data-lvalidate]').each(function () {
-            var pl = $(this).attr('placeholder'), lv = $(this).data('lvalidate');
+        //var iconLink = new util.FaviconAwesome('fa-github', '333');
+        $form().find('[data-laraval]').each(function () {
+            var pl = $(this).attr('placeholder'), lv = $(this).data('laraval');
             $(this).attr('placeholder', pl + ' (' + lv + ')');
         });
-        demo.forms.local = new demo.Form(demo.$form('local'));
+        demo.form = new demo.Form($form());
     }
     demo.init = init;
-    function setCodePreview(tab, code, lang) {
-        if (lang === void 0) { lang = 'json'; }
-        var $fs = $('#tab-' + tab + '-data').html('');
-        var $pre = $('<pre>').appendTo($fs);
-        var $code = $('<code>').addClass('hljs lang-' + lang).appendTo($pre);
-        code = hljs.highlight(lang, code).value;
-        $code.html(code);
-    }
-    demo.setCodePreview = setCodePreview;
+    var CP;
+    (function (CP) {
+        var $el = $("#demo-code-preview"), $ul, $content;
+        var _tabs = {};
+        function slug(name) {
+            return name.toLowerCase().replace(/\s/g, '_');
+        }
+        function init() {
+            $el.html('');
+            $ul = demo.cre('ul').appendTo($el).addClass('nav nav-tabs').attr('role', 'tablist');
+            $content = demo.cre().appendTo($el).addClass('tab-content');
+            $el.addClass('in');
+        }
+        CP.init = init;
+        function get(name) {
+            return _tabs['tab-cp-' + slug(name)];
+        }
+        CP.get = get;
+        function add(name, active) {
+            if (active === void 0) { active = false; }
+            var id = 'tab-cp-' + slug(name);
+            var $li = demo.cre('li').attr('role', 'presentation');
+            var $a = demo.cre('a').text(name).attr({
+                'href': '#' + id,
+                'role': 'tab',
+                'aria-controls': id,
+                'data-toggle': 'tab'
+            });
+            var $pre = demo.cre('pre');
+            var $panel = demo.cre('div').addClass('tab-pane fade').attr({ id: id, role: 'tabpanel' });
+            if (active) {
+                $li.addClass('active');
+                $panel.addClass('in active');
+            }
+            _tabs[id] = {
+                name: name, id: id,
+                a: $a.appendTo($li), li: $li.appendTo($ul), panel: $panel.appendTo($content), pre: $pre.appendTo($panel),
+                codes: {}, getCode: function (name) {
+                    return this.codes[slug(name)];
+                }
+            };
+            _tabs[id].addCode = _addCode.bind(_tabs[id]);
+            _tabs[id].setCode = _setCode.bind(_tabs[id]);
+            return _tabs[id];
+        }
+        CP.add = add;
+        function _setCode(name, code, lang) {
+            if (lang === void 0) { lang = 'json'; }
+            if (this.pre.parent('.slimScrollDiv').length > 0) {
+                this.pre.unwrap();
+                this.panel.find('.slimScrollDiv, .slimScrollBar, .slimScrollRail').remove();
+            }
+            var id = slug(name);
+            this.codes[id].code.remove();
+            this.codes[id].code = demo.cre('code').appendTo(this.pre).addClass('hljs lang-' + lang).html(hljs.highlight(lang, code).value);
+            this.pre.slimScroll({ height: 600 });
+            return this;
+        }
+        function _addCode(name, code, lang, showTitle) {
+            if (lang === void 0) { lang = 'json'; }
+            if (showTitle === void 0) { showTitle = false; }
+            var id = slug(name);
+            this.codes[id] = { title: demo.cre('h5').appendTo(this.pre).text(name), code: demo.cre('code') };
+            !showTitle && this.codes[id].title.hide();
+            _setCode.call(this, name, code, lang);
+            return this;
+        }
+    })(CP = demo.CP || (demo.CP = {}));
 })(demo || (demo = {}));
 //# sourceMappingURL=demo.js.map

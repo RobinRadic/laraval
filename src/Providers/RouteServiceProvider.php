@@ -1,5 +1,5 @@
 <?php
-namespace Radic\LaravelJqueryValidation\Providers;
+namespace Radic\Laraval\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
@@ -20,8 +20,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'Radic\LaravelJqueryValidation\Http\Controllers';
-    protected $demoNamespace = 'Radic\LaravelJqueryValidation\Http\Controllers\Demo';
+    protected $namespace = 'Radic\Laraval\Http\Controllers';
+    protected $demoNamespace = 'Radic\Laraval\Http\Controllers\Demo';
 
     /**
      * Boot Codex's route service provider.
@@ -53,20 +53,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        if (config('laravel-jquery-validation.enable_demo')) {
+
+        if (config('laraval.enable_demo')) {
             $router->group([
-                'as'        => 'laravel-jquery-validation::demo.',
-                'prefix'    => 'radic/laravel-jquery-validation',
+                'as'        => 'laraval::demo.',
+                'prefix'    => 'laraval',
                 'namespace' => $this->demoNamespace
             ], function (Router $router) {
-            
+
                 require(realpath(__DIR__ . '/../Http/routes-demo.php'));
             });
         }
 
         $router->group([
-            'as' => 'laravel-jquery-validation::',
-            'prefix' => 'laravel-jquery-validation',
+            'as' => 'laraval::',
+            'prefix' => 'laraval',
             'namespace' => $this->namespace
         ], function (Router $router) {
             require(realpath(__DIR__.'/../Http/routes.php'));

@@ -4,7 +4,7 @@
  *
  * MIT License and copyright information bundled with this package in the LICENSE file
  */
-namespace Radic\LaravelJqueryValidation\Http\Controllers;
+namespace Radic\Laraval\Http\Controllers;
 
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
@@ -15,7 +15,7 @@ use Illuminate\Routing\Controller;
 /**
  * This is the AjaxValidationController.
  *
- * @package        Radic\LaravelJqueryValidation
+ * @package        Radic\Laraval
  * @author         Caffeinated Dev Team
  * @copyright      Copyright (c) 2015, Caffeinated
  * @license        https://tldrlegal.com/license/mit-license MIT License

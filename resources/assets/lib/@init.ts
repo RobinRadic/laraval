@@ -1,7 +1,6 @@
-// helper functions / vars
+
+
 module laraval {
-
-
     /**
      * Enables log messages and warnings
      * @type {boolean}
@@ -33,7 +32,6 @@ module laraval {
             console.trace();
         }
     }
-
 
     var kindsOf:any = {};
     'Number String Boolean Function RegExp Array Date Error'.split(' ').forEach(function (k) {

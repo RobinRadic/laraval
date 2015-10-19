@@ -1,6 +1,6 @@
 <?php
 
-namespace Radic\LaravelJqueryValidation\Providers;
+namespace Radic\Laraval\Providers;
 
 use Caffeinated\Beverage\ConsoleServiceProvider as BaseConsoleProvider;
 
@@ -10,24 +10,24 @@ use Caffeinated\Beverage\ConsoleServiceProvider as BaseConsoleProvider;
 * @author        Caffeinated
 * @copyright  Copyright (c) 2015, Caffeinated
 * @license      https://tldrlegal.com/license/mit-license MIT
-* @package      Radic\LaravelJqueryValidation
+* @package      Radic\Laraval
 */
 class ConsoleServiceProvider extends BaseConsoleProvider
 {
     /**
      * @var  string
      */
-    protected $namespace = 'Radic\\LaravelJqueryValidation\\Console';
+    protected $namespace = 'Radic\\Laraval\\Console';
 
     /**
      * @var  string
      */
-    protected $prefix = 'radic.laravel-jquery-validation.commands.';
+    protected $prefix = 'radic.laraval.commands.';
 
     /**
      * @var  array
      */
     protected $commands = [
-        'test'   => 'LaravelJqueryValidationTest'
+        'test'   => 'Test'
     ];
 }

@@ -87,4 +87,27 @@ module demo {
         return $(document.createElement(name));
     }
 
+    export function codeIndentFix(str) {
+        var fix:any = function (code:any, leading:boolean=true) {
+            var txt = code;
+            if (leading) {
+                txt = txt.replace(/^[\r\n]+/, "").replace(/\s+$/g, "");
+            }
+            if (/^\S/gm.test(txt)) {
+                return code;
+            }
+            var mat, str, re = /^[\t ]+/gm, len, min = 1e3;
+            while (mat = re.exec(txt)) {
+                len = mat[0].length;
+                if (len < min) {
+                    min = len;
+                    str = mat[0];
+                }
+            }
+            if (min == 1e3)
+                return code;
+            return txt.replace(new RegExp("^" + str, 'gm'), "");
+        };
+        return fix(str);
+    }
 }

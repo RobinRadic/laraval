@@ -8,6 +8,7 @@ declare module demo {
     function def(val: any, def: any): any;
     function defined(obj?: any): boolean;
     function cre(name?: string): JQuery;
+    function codeIndentFix(str: any): any;
 }
 declare module demo {
     var _json_stringify: any;
@@ -33,32 +34,33 @@ declare module demo.util {
 declare module demo {
     class Form {
         $el: JQuery;
+        validator: JQueryValidationValidator;
         $btnRandom: JQuery;
         $btnClearValues: JQuery;
         $btnClearValidation: JQuery;
         generated: any[];
+        lastInputEl: JQuery;
         constructor($el: JQuery);
-        initFormTabContent(): void;
-        initControlsTabContent(): void;
-        initRulesTabContent(): void;
+        getRules(): any;
         random(): void;
         clearValues(): void;
         clearValidation(): void;
         bindButtons(): void;
         unbindButtons(): void;
         serialize(): JQuerySerializeArrayElement[];
-        getControl(name: string): validateLaravel.ValidationControl;
-        getControls(): validateLaravel.ValidationControl[];
         getRandomGenerated(): any;
     }
 }
 declare module demo {
     function extend(opts?: any): void;
     var jsonFilePath: string;
-    var $forms: JQuery;
-    var forms: any;
-    function $form(name: any): JQuery;
+    var form: Form;
+    function $form(): JQuery;
     function generatedData(): JQueryXHR;
     function init(): void;
-    function setCodePreview(tab: string, code: string, lang?: string): void;
+    module CP {
+        function init(): void;
+        function get(name: string): any;
+        function add(name: string, active?: boolean): any;
+    }
 }

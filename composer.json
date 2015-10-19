@@ -1,11 +1,11 @@
 {
-    "name": "radic/laravel-jquery-validation",
-    "description": "",
+    "name": "radic/laraval",
+    "description": "Laravel 5 JQuery validation using jquery.validate, client-side only or using AJAX",
     "authors": [
         {
-            "name": "Caffeinated",
+            "name": "Robin Radic",
             "email": "test@email.nl",
-            "homepage": "https://github.com/Caffeinated"
+            "homepage": "https://github.com/robinradic"
         }
     ],
     "minimum-stability": "dev",
@@ -19,12 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Radic\\LaravelJqueryValidation\\": "src/"
+            "Radic\\Laraval\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Radic\\Tests\\LaravelJqueryValidation\\": "tests/"
+            "Radic\\Tests\\Laraval\\": "tests/"
         }
     }
 }

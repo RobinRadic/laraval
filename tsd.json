@@ -13,6 +13,9 @@
     },
     "highlightjs/highlightjs.d.ts": {
       "commit": "98d3168c2c570352a3a7393788e2ec9fbb08ade6"
+    },
+    "jquery.slimScroll/jquery.slimScroll.d.ts": {
+      "commit": "af5b8275d1f2b92738b93fddabc461fc20c553a1"
     }
   }
 }

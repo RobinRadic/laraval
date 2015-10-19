@@ -21,13 +21,13 @@ module.exports = function (_grunt) {
         asset('demo.ts')
     ];
     var tsSrc = [
-        asset('lib/@init.ts'),/*
-        asset('lib/util/*.ts'),
-        asset('lib/widget.ts'),
-        asset('lib/methods.php.ts'),
-        asset('lib/methods.validate.ts'),
-        asset('lib/methods.laravel.ts'),*/
-        vfile + '.ts'
+        asset('lib/@init.ts'),
+        asset('lib/php.ts'),
+        asset('lib/validator.ts'),
+        asset('lib/mimes.ts'),
+        asset('lib/messages.ts'),
+        vfile + '.ts',
+        asset('lib/~bootstrap.ts')
     ];
     var schemaPath = asset('demo-data.json');
 
@@ -72,7 +72,7 @@ module.exports = function (_grunt) {
             umd_uglify: {files: [vfile + '.js'], tasks: ['umd:validator', 'uglify:validator']},
             ts        : {files: [vfile + '.ts', asset('lib/**/*.ts')], tasks: ['ts:dev']},
             ts_demo   : {files: demoTsSrc, tasks: ['ts:demo']},
-            sass      : {files: [asset('demo.css')], tasks: ['sass:demo']}
+            sass      : {files: [asset('demo.scss')], tasks: ['sass:demo']}
         }
     };
 
