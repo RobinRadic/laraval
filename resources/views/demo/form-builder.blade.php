@@ -52,6 +52,7 @@
         </div>
 
 
+
         <div class="col-md-4">
             {!! Form::demoTitle('Comparing') !!}
             {!! Form::demoInput('compare_same', 'same:title', 'text', 'Same') !!}
