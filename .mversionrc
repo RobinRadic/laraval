@@ -3,7 +3,7 @@
     "tagName": "%s",
     "scripts": {
         "preupdate": "echo 'Bumping version' && sh ./run preupdate",
-        "postcommit": "sh ./run postcommit",
+        "postcommit": "sh ./run postcommit && echo 'Post commit executed'",
         "postupdate": "echo 'Updated to version %s in manifest files'"
     }
 }
