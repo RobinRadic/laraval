@@ -71,7 +71,7 @@
 [![Scrutinizer quality](https://img.shields.io/scrutinizer/g/radic/laravel-jquery-validation.svg?&style=flat-square)](https://scrutinizer-ci.com/g/radic/laravel-jquery-validation)
 [![Source](http://img.shields.io/badge/source-radic/laravel-jquery-validation-blue.svg?style=flat-square)](https://github.com/radic/laravel-jquery-validation)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)--->
-				<p>Radic Laraval</p>
+				<p>Laravel 5 jQuery form validation using Laravel&#39;s Validator rules. Client &amp; Server(AJAX) validation strategies.</p>
 				<ul>
 					<li>You can use the <code>javascript</code> library stand-alone. The provided PHP library is optional.</li>
 					<li>Stand alone can <strong>not</strong> use the <code>database</code> validation rules.</li>
@@ -82,7 +82,8 @@
 				</ul>
 				<p>The package follows the FIG standards PSR-1, PSR-2, and PSR-4 to ensure a high level of interoperability between shared PHP code.</p>
 				<h2 id="quick-overview">Quick Overview</h2>
-				<p><a href="http://rob.rad"><strong>Full documentation here</strong></a></p>
+				<p><a href="#"><strong>Full documentation s00n</strong></a></p>
+				<h4 id="client-side-only">Client side only</h4>
 				<p>By simple including the <code>jquery.validate.js</code> &amp; <code>jquery.validate.laraval.js</code> you will be able to use Laravel&#39;s (5.x) validation rules like this:</p>
 				<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">input</span>
     <span class="hljs-attribute">name</span>=<span class="hljs-value">"user_email"</span> 
@@ -90,7 +91,7 @@
     <span class="hljs-attribute">data-laraval</span>=<span class="hljs-value">"required|email|not_in:admin@mysite.com,manager@mysite.com"</span>
 &gt;</span>
 </code></pre>
-				<p>Or simply padding the complete validation rules as json_encoded object to your view and dropping it onto your form:</p>
+				<p>Or simply passing the complete validation rules as json_encoded object to your view and dropping it onto your form:</p>
 				<p><strong>Controller/route handler</strong></p>
 				<pre><code class="lang-php"><span class="hljs-variable">$rules</span> = [
     <span class="hljs-string">'title'</span>         =&gt; <span class="hljs-string">'required|max:15|alpha_num'</span>,
@@ -116,20 +117,85 @@
     <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"user_email"</span> <span class="hljs-attribute">data-laraval</span>=<span class="hljs-value">"not_in:admin@mysite.com,manager@mysite.com"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"email"</span> &gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
 </code></pre>
-				<h4 id="unsupported-pure-client-side-mode-validation-methods">Unsupported pure client-side mode validation methods</h4>
-				<ul>
-					<li>Active URL</li>
-					<li>Array</li>
-					<li>Date Format</li>
-					<li>Exists (Database)</li>
-					<li>Image (File)</li>
-					<li>Regular Expression</li>
-					<li>Timezone</li>
-					<li>Unique (Database)</li>
-				</ul>
-				<h2 id="quick-installation">Quick Installation</h2>
+				<h4 id="ajax-validation">AJAX validation</h4>
+				<p>Using the AJAX validation strategy is probably the quickest, easiest and most effective way.
+				<strong>FormController.php</strong></p>
+				<pre><code class="lang-php"><span class="hljs-keyword">use</span> <span class="hljs-title">Radic</span>\<span class="hljs-title">Laraval</span>\<span class="hljs-title">Contracts</span>\<span class="hljs-title">Factory</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FormController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">DemoController</span>
+</span>{
+    <span class="hljs-keyword">protected</span> <span class="hljs-variable">$laraval</span>;
+    <span class="hljs-keyword">protected</span> <span class="hljs-variable">$rules</span> = [ ]; <span class="hljs-comment">//All rules can be used   </span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(Factory <span class="hljs-variable">$factory</span>)</span>
+    </span>{
+        <span class="hljs-variable">$this</span>-&gt;laraval = <span class="hljs-variable">$factory</span>-&gt;make(<span class="hljs-string">'ajax'</span>, <span class="hljs-variable">$this</span>-&gt;rules);
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> view(<span class="hljs-string">'my-awesome-view'</span>, [
+            <span class="hljs-string">'laraval'</span> =&gt; <span class="hljs-variable">$this</span>-&gt;laraval
+        ]);
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ajaxValidate</span><span class="hljs-params">(Request <span class="hljs-variable">$request</span>)</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-variable">$this</span>-&gt;laraval-&gt;validate(<span class="hljs-variable">$request</span>, <span class="hljs-variable">$this</span>-&gt;rules);
+    }
+}
+</code></pre>
+				<p><strong>my-awesome-view.blade.php</strong>  </p>
+				<p>Use the <code>init(array $defaults = [])</code> option and then the <code>make($jQuerySelector, array $pluginOptions = [])</code> method <strong>After including the javascript dependencies</strong></p>
+				<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">form</span> <span class="hljs-attribute">data-laraval</span>=<span class="hljs-value">"{!! $laraval-&gt;getRules()-&gt;toJson() !!}"</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- ... form elements ... --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">form</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"{{ asset('jquery.js') }}"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"{{ asset('jquery.validate.js') }}"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"{{ asset('vendor/laraval/jquery.validate.laraval.min.js') }}"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+
+{!! $laraval-&gt;init() !!}
+{!! $laraval-&gt;make('form', [ 'url' =&gt; route('route.to.ajaxValidate') ]) !!}
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+</code></pre>
+				<h2 id="installation">Installation</h2>
+				<p>If you are only interested in the client-side javascript library you could also simply download it from the repo <a href="https://github.com/RobinRadic/laraval/blob/master/resources/assets/jquery.validate.laravel.min.js">jquery.validate.laravel.min.js</a>.</p>
+				<h4 id="node-bower">Node / Bower</h4>
+				<p>If you rather not use Composer, you can also install the package using <code>npm</code> or <code>bower</code>:</p>
+				<pre><code class="lang-bash">npm install laraval
+<span class="hljs-comment"># or</span>
+bower install laraval
+</code></pre>
+				<h4 id="composer">Composer</h4>
 				<p>Begin by installing the package through Composer.</p>
-				<pre><code class="lang-bash">composer require radic/laravel-jquery-validation
+				<pre><code class="lang-bash">composer require radic/laraval
+</code></pre>
+				<p>Or</p>
+				<pre><code class="lang-json">&quot;require&quot;: {
+    &quot;radic/laraval&quot;: &quot;0.*&quot;
+}
+</code></pre>
+				<h4 id="laravel">Laravel</h4>
+				<p>If you want to make use AJAX or rather use the provided convient initialisation methods, add the service provider and optionally the Facade;
+				<strong>config/app.php</strong></p>
+				<pre><code class="lang-php"><span class="hljs-string">'providers'</span> =&gt; [
+    Radic\Laraval\LaravalServiceProvider::class
+],
+<span class="hljs-string">'facades'</span> =&gt; [
+    Radic\Laraval\Facades\Laraval::class
+]
+</code></pre>
+				<p>Optionally tell artisan to publish the config and/or views</p>
+				<pre><code class="lang-bash">php artisan vendor:publish --provider=<span class="hljs-string">"Radic\Laraval\LaravalServiceProvider"</span> <span class="hljs-comment">#all</span>
+php artisan vendor:publish --provider=<span class="hljs-string">"Radic\Laraval\LaravalServiceProvider"</span> --tag=<span class="hljs-string">"config"</span> <span class="hljs-comment">#just config</span>
+php artisan vendor:publish --provider=<span class="hljs-string">"Radic\Laraval\LaravalServiceProvider"</span> --tag=<span class="hljs-string">"view"</span>   <span class="hljs-comment">#just views</span>
+</code></pre>
+				<h4 id="optional-features">Optional features</h4>
+				<h6 id="formbuilder-integration">FormBuilder integration</h6>
+				<p>Laraval can optionally extend the FormBuilder provided in the <code>laravelcollective/html</code> package.
+				To do so, publish the configuration and enable the option</p>
+				<pre><code class="lang-php"><span class="hljs-keyword">return</span> [
+    <span class="hljs-string">'enable_form_builder'</span> =&gt; <span class="hljs-keyword">true</span>
+]
 </code></pre>
 			</div>
 		</div>
