@@ -84,8 +84,9 @@ module demo {
             var id:string = slug(name);
             this.codes[id].code.remove();
             this.codes[id].code = cre('code').appendTo(this.pre).addClass('hljs lang-' + lang).html(hljs.highlight(lang, code).value)
-            this.pre.slimScroll(<any> { height: 600 });
+            this.pre.slimScroll(<any> { height: 600, distance: '1px', color: '#A6BFD8', alwaysVisible: true });
             return this;
+
         }
 
         function _addCode(name:string, code:string, lang:string = 'json', showTitle:boolean=false) {

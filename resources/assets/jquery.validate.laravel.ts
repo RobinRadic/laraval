@@ -35,6 +35,12 @@ module laraval {
             $.extend(rules, binding.call(element, element, rule))
         }
 
+        Object.keys(rules).forEach((method:string) => {
+            if(method in $.validator.methods === false){
+                throw new Error('Laraval rule binding [' + rule.name + '] resolves to undefined validator method [' + method + ']');
+            }
+        });
+
         return rules;
     }
 
@@ -132,9 +138,6 @@ module laraval {
     }
 
 
-    export function addConfig(config:any={}){
-        $.extend($.validator.defaults.laraval.config, config);
-    }
 
 }
 

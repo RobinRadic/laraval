@@ -263,7 +263,7 @@ var laraval;
     laraval.ruleBindings = {
         'accepted': bindingWithParam('accepted'),
         'alpha': 'alpha',
-        'alpha_num': 'alphanumeric',
+        'alpha_num': 'alpha_num',
         'alpha_dash': 'alpha_dash',
         'after': bindingWithParam('after'),
         'before': bindingWithParam('before'),
@@ -349,6 +349,7 @@ var laraval;
                 enabled: false,
                 strategy: 'local',
                 dataAttribute: 'laraval',
+                messages: {},
                 url: '',
                 singleFieldReferenceKey: '',
                 crsfTokenKey: '_token',
@@ -377,6 +378,12 @@ var laraval;
             function init() {
                 if (this.settings.laraval.strategy === 'ajax') {
                     this.settings.showErrors = laraval.ajaxStrategy.showErrors.bind(this);
+                }
+                else {
+                    var messages = this.settings.laraval.messages;
+                    if (laraval.defined(messages) && Object.keys(messages).length > 0) {
+                        laraval.addMessages(messages);
+                    }
                 }
                 return _init.call(this);
             }
@@ -458,7 +465,7 @@ var laraval;
                     }));
                 }
                 else {
-                    return _element.call(this);
+                    return _element.call(this, element);
                 }
             }
             prototype.element = element;
@@ -562,6 +569,9 @@ var laraval;
         }
         var _m = $.validator.methods;
         validator.methods = {
+            alpha_num: function (value, element, param) {
+                return this.optional(element) || /^\w+$/i.test(value);
+            },
             alpha: function (value, element, param) {
                 return this.optional(element) || /^[a-z]+$/i.test(value);
             },
@@ -798,6 +808,11 @@ var laraval;
         else if (type === 'function') {
             $.extend(rules, binding.call(element, element, rule));
         }
+        Object.keys(rules).forEach(function (method) {
+            if (method in $.validator.methods === false) {
+                throw new Error('Laraval rule binding [' + rule.name + '] resolves to undefined validator method [' + method + ']');
+            }
+        });
         return rules;
     }
     laraval.convertRule = convertRule;
@@ -886,11 +901,6 @@ var laraval;
         return type;
     }
     laraval.getElementType = getElementType;
-    function addConfig(config) {
-        if (config === void 0) { config = {}; }
-        $.extend($.validator.defaults.laraval.config, config);
-    }
-    laraval.addConfig = addConfig;
 })(laraval || (laraval = {}));
 $.extend(true, $.validator, laraval.validator);
 $.validator.laraval = laraval;

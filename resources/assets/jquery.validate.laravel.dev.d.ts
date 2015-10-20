@@ -63,5 +63,4 @@ declare module laraval {
     function getRuleByName(name: string, rules: Array<LaravalRule>): number;
     function getElementRules(element: HTMLInputElement): Array<LaravalRule>;
     function getElementType(el: HTMLInputElement): string;
-    function addConfig(config?: any): void;
 }

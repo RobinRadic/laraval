@@ -108,6 +108,23 @@ class Factory implements LaravalContract
     }
 
     /**
+     * init the validator with defaults
+     */
+    public function init($defaults = [])
+    {
+        $defaults = array_replace_recursive(
+            $this->config('client_defaults'),
+            $defaults
+        );
+        return view('laraval::init', compact('defaults'));
+    }
+
+    public function create($strategy, $selector, array $rules = [ ], array $options = [ ])
+    {
+
+    }
+
+    /**
      * Adds a new strategy
      *
      * @param $name

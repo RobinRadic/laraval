@@ -71,7 +71,7 @@ class LaravalServiceProvider extends ServiceProvider
         $app->forgetInstance('form');
         if (!$app->bound('html')) {
             $this->app->singleton('html', function ($app) {
-            
+
                 return new HtmlBuilder($app['url']);
             });
         }

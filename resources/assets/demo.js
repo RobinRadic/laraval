@@ -372,7 +372,7 @@ var demo;
             var id = slug(name);
             this.codes[id].code.remove();
             this.codes[id].code = demo.cre('code').appendTo(this.pre).addClass('hljs lang-' + lang).html(hljs.highlight(lang, code).value);
-            this.pre.slimScroll({ height: 600 });
+            this.pre.slimScroll({ height: 600, distance: '1px', color: '#A6BFD8', alwaysVisible: true });
             return this;
         }
         function _addCode(name, code, lang, showTitle) {

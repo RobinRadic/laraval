@@ -15,6 +15,16 @@
         @stop
     </form>
 
+@section('init-script')
+    {!! $laraval->init() !!}
+    @parent
+    <script id="init-script">
+        $(function () {
+            $('form').validate();
+        })
+    </script>
+@stop
+
 @section('form-content')
 
     <div class="row">
@@ -139,14 +149,4 @@
     </div>
 
 
-@stop
-
-@section('init-script')
-    {!! $laraval->init() !!}
-    @parent
-    <script id="init-script">
-        $(function () {
-            $('form').validate();
-        })
-    </script>
 @stop

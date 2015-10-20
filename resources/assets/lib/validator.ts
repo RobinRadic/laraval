@@ -16,7 +16,7 @@ module laraval {
         // laravel: validator
         'accepted': bindingWithParam('accepted'),
         'alpha': 'alpha',
-        'alpha_num': 'alphanumeric',
+        'alpha_num': 'alpha_num',
         'alpha_dash': 'alpha_dash',
         'after': bindingWithParam('after'),
         //'array': '',
@@ -107,12 +107,13 @@ module laraval.validator {
 
     export var defaults:any = {
         laraval: {
-            // server config
+            // general
             enabled: false,
             strategy: 'local',
             dataAttribute: 'laraval',
+            messages: {},
 
-            // mode ajax
+            // ajax strategy
             url: '',
             singleFieldReferenceKey: '',
             crsfTokenKey: '_token',
@@ -146,6 +147,11 @@ module laraval.validator {
         export function init() {
             if(this.settings.laraval.strategy === 'ajax') {
                 this.settings.showErrors = ajaxStrategy.showErrors.bind(this);
+            } else {
+                var messages:any = this.settings.laraval.messages;
+                if(defined(messages) && Object.keys(messages).length > 0){
+                    addMessages(messages);
+                }
             }
             return _init.call(this);
         }
@@ -246,7 +252,7 @@ module laraval.validator {
                 }));
 
             } else {
-                return _element.call(this);
+                return _element.call(this, element);
             }
         }
 
@@ -360,6 +366,9 @@ module laraval.validator {
     /** @lends JQueryValidationValidator */
     export var methods:any = {
 
+        alpha_num: function (value:any, element?:HTMLInputElement, param?:string) {
+            return this.optional(element) || /^\w+$/i.test(value);
+        },
 
         alpha: function (value:any, element?:HTMLInputElement, param?:string) {
             return this.optional(element) || /^[a-z]+$/i.test(value);
