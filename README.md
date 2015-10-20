@@ -23,12 +23,22 @@ The package follows the FIG standards PSR-1, PSR-2, and PSR-4 to ensure a high l
 
 
 
-
-Quick Overview
+Quick Impression
 -------------
 [**Full documentation s00n**](#)
 
+[**PHP API Documentation s00n**](#)
+
+[**Javascript API Documentation s00n**](#)
+
 #### Client side only
+
+```
+jquery.validate.laravel.min.js
+Size:           15.76 Kb
+Gzip Size:      4.70 Kb
+```
+
 By simple including the `jquery.validate.js` & `jquery.validate.laraval.js` you will be able to use Laravel's (5.x) validation rules like this:
 
 ```html
@@ -100,8 +110,8 @@ class FormController extends DemoController
 **my-awesome-view.blade.php**  
 
 Use the `init(array $defaults = [])` option and then the `make($jQuerySelector, array $pluginOptions = [])` method **After including the javascript dependencies**
-```html
-<form data-laraval="{!! $laraval->getRules()->toJson() !!}">
+```php
+<form id="awesome-form">
 <!-- ... form elements ... -->
 </form>
 
@@ -110,12 +120,12 @@ Use the `init(array $defaults = [])` option and then the `make($jQuerySelector, 
 <script src="{{ asset('vendor/laraval/jquery.validate.laraval.min.js') }}"></script>
 
 {!! $laraval->init() !!}
-{!! $laraval->make('form', [ 'url' => route('route.to.ajaxValidate') ]) !!}
+{!! $laraval->make('form#awesome-form', [ 'url' => route('route.to.ajaxValidate') ]) !!}
 
 </body>
 ```
 
-
+**Check the demo [views](https://github.com/RobinRadic/laraval/tree/master/resources/views/demo) and [controllers](https://github.com/RobinRadic/laraval/tree/master/src/Http/Controllers/Demo) for more exampels**
 
 
 
@@ -169,11 +179,12 @@ php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" --t
 
 
 ###### FormBuilder integration
-Laraval can optionally extend the FormBuilder provided in the `laravelcollective/html` package. 
+Laraval can optionally extend the FormBuilder provided in the `laravelcollective/html` package if you have it. 
 To do so, publish the configuration and enable the option
 
 ```php
 return [
-    'enable_form_builder' => true
+    'enable_form_builder' => true,
+    // ...
 ]
 ```
