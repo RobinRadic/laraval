@@ -40,9 +40,7 @@ If you want to make use AJAX or rather use the provided convient initialisation 
 ]
 ```
 
-Optionally tell artisan to publish the config and/or views
+Publish the config and assets.
 ```bash
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" #all
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" --tag="config" #just config
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" --tag="view"   #just views
+php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider"
 ```

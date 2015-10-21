@@ -16,7 +16,7 @@ Laraval can be used in many ways. Lets start with a basic client-side only examp
 <!--- Javascripts, will be omitted in the other examples --> 
 <script src="jquery.min.js"></script>
 <script src="jquery.validate.min.js"></script>
-<script src="{{ asset('vendor/laraval/jquery.validate.laravel.min.js') }}"></script>
+<script src="{{ asset('vendor/laraval/jquery.validate.laravel.js') }}"></script>
 
 <!--- (optional) The init function will set default values as configured in the config file -->
 {{ Laraval::init() }}
