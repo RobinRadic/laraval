@@ -18,26 +18,16 @@ use Illuminate\Http\Request;
  */
 class AjaxDemoController extends DemoController
 {
-    /**
-     * @var \Radic\Laraval\AjaxValidationMode
-     */
-    protected $laraval;
-    public function __construct()
-    {
-        parent::__construct('ajax');
-    }
-
     public function show()
     {
         return view('laraval::demo.ajax', [
             'current' => 'ajax',
-            'rules' => $this->rules,
-            'laraval' => $this->laraval
+            'rules' => $this->rules
         ]);
     }
 
     public function ajaxValidate(Request $request)
     {
-        return $this->laraval->validate($request, $this->rules);
+        return $this->laraval->make('ajax', $this->rules)->validate($request);
     }
 }

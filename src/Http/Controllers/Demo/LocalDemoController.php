@@ -16,16 +16,11 @@ namespace Radic\Laraval\Http\Controllers\Demo;
  */
 class LocalDemoController extends DemoController
 {
-    public function __construct()
-    {
-        parent::__construct('local');
-    }
-
     public function show()
     {
         return view('laraval::demo.local', [
             'current' => 'local',
-            'laraval' => $this->laraval
+            'rules' => $this->rules
         ]);
     }
 }

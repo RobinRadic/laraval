@@ -118,7 +118,7 @@ module laraval.validator {
             singleFieldReferenceKey: '',
             crsfTokenKey: '_token',
             crsfToken: function (validator) {
-                validator.findByName(validator.settings.laraval.crsfToken).val();
+                return validator.findByName(validator.settings.laraval.crsfToken).val();
             },
             ajaxSettings: $.extend({}, $.ajaxSettings, {
                 method: 'post',
@@ -166,19 +166,21 @@ module laraval.validator {
                 $.extend( this.submitted, this.errorMap );
                 this.invalid = $.extend({}, this.errorMap );
                 var validator = this;
-                console.log('validate ajax form', $.extend(true, {}, validator));
+                log('validate ajax form', $.extend(true, {}, validator));
 
                 $.ajax($.extend(true, {}, this.settings.laraval.ajaxSettings, {
                     url: this.settings.laraval.url,
                     data: $(this.currentForm).serializeArray(),
                     success: function(response){
-                        console.log('ajax method', response);
+                        log('ajax method', response);
                         var errors:any = {};
-                        $.each(response, (name:string, msg:string) => {
-                            if(validator.findByName(name).length > 0){
-                                errors[name] = msg;
-                            }
-                        });
+                        if(Object.keys(response).length > 0) {
+                            $.each(response, (name:string, msg:string) => {
+                                if (validator.findByName(name).length > 0) {
+                                    errors[name] = msg;
+                                }
+                            });
+                        }
                         if(validator.settings.laraval.formValidationSuccess){
                             validator.settings.laraval.formValidationSuccess.call(validator, response, errors);
                         }
@@ -213,7 +215,7 @@ module laraval.validator {
                     url: this.settings.laraval.url,
                     data: data,
                     success: function(response){
-                        console.log('ajax element', response);
+                        log('ajax element', response);
                         var errors:any = {};
 
                         if ( checkElement === 'undefined' ) {
@@ -270,7 +272,7 @@ module laraval.validator {
         export function stopRequest(element, valid) {
             _stopRequest.apply(this, [element, valid]);
             if (DEBUG && this['pendingRequest'] === 0) {
-                console.log('this.pendingRequest = 0');
+                log('this.pendingRequest = 0');
 
                 console.profileEnd();
                 console.groupEnd();
@@ -353,7 +355,7 @@ module laraval.validator {
                     size += file.size;
                 });
             }
-            console.log('file size ', size, element);
+            log('file size ', size, element);
             return size;
         } else {
             return value.length;
@@ -388,7 +390,7 @@ module laraval.validator {
         before: function (value:any, element?:HTMLInputElement, param?:string) {
             var myDate:any = dtime(value);
             var otherField = this.findByName(param);
-            var otherDate = otherField.length > 0 ? dtime(otherField.val()) : dtime(param); //console.log('after- value', value, 'el', element, 'param', param, 'myDate', myDate, 'otherField', otherField, 'otherDate', otherDate);
+            var otherDate = otherField.length > 0 ? dtime(otherField.val()) : dtime(param); //log('after- value', value, 'el', element, 'param', param, 'myDate', myDate, 'otherField', otherField, 'otherDate', otherDate);
             return this.optional(element) || myDate < otherDate;
         },
 

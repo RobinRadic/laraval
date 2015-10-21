@@ -18,25 +18,42 @@ use Caffeinated\Beverage\Path;
  */
 class LocalValidationStrategy extends ValidationStrategy
 {
+    /**
+     * @var array
+     */
     protected $messages;
 
-    protected $viewFile = 'laraval::init-local';
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getName()
     {
         return 'local';
     }
 
-    public function init(array $options = [ ], $force = false)
+    /**
+     * @inheritdoc
+     */
+    public function init()
     {
         $this->loadMessages();
+    }
 
-        return parent::init(array_replace_recursive([
+    /**
+     * @inheritdoc
+     */
+    public function create($selector = 'form', array $options = [ ], array $data = [ ])
+    {
+        $options = array_replace_recursive([
             'messages' => static::flatten($this->messages)
-        ], $options), $force);
+        ], $options);
+
+        $data = array_replace_recursive([
+            //'rules' => new Collection()
+        ], $data);
+
+        return parent::create($selector, $options, $data);
     }
 
 
@@ -54,13 +71,19 @@ class LocalValidationStrategy extends ValidationStrategy
         foreach ($langs as $lang) {
             $path = Path::join($langsPath, $lang, 'validation.php');
             $path = base_path($path);
-            if ($this->files->exists($path)) {
-                $this->messages = array_replace_recursive($this->messages, $this->files->getRequire($path));
+            if ($this->getFiles()->exists($path)) {
+                $this->messages = array_replace_recursive($this->messages, $this->getFiles()->getRequire($path));
             }
         }
     }
 
-
+    /**
+     * flattens an array
+     *
+     * @param        $array
+     * @param string $prepend
+     * @return array
+     */
     protected static function flatten($array, $prepend = '')
     {
         $results = [ ];

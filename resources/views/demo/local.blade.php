@@ -10,19 +10,14 @@
         id="demo-form-laraval"
         action="{{ route('laraval::demo.local.store') }}"
         method="POST"
-        data-laraval='{!! $laraval->getRules()->toJson() !!}'
         class="form-horizontal">
         @stop
     </form>
 
 @section('init-script')
-    {!! $laraval->init() !!}
+    {!! Laraval::init() !!}
     @parent
-    <script id="init-script">
-        $(function () {
-            $('form').validate();
-        })
-    </script>
+    {!! Laraval::create('local', 'form#demo-form-laraval', $rules, [/* options */]) !!}
 @stop
 
 @section('form-content')
@@ -33,7 +28,7 @@
             {!! Form::demoInput('title') !!}
             {!! Form::demoInput('body') !!}
             {!! Form::demoInput('json', '', 'text', 'JSON') !!}
-            {!! Form::demoInput('ip', $laraval->rule('ip')) !!}
+            {!! Form::demoInput('ip', '') !!}
 
 
             {!! Form::demoTitle('dates') !!}
@@ -43,7 +38,7 @@
 
 
             {!! Form::demoTitle('numbers &amp; integers') !!}
-            {!! Form::demoInput('age', $laraval->rule('age'), 'number') !!}
+            {!! Form::demoInput('age', '', 'number') !!}
             {!! Form::demoInput('integer', 'integer', 'number') !!}
             {!! Form::demoInput('digits', 'digits:5', 'number') !!}
             {!! Form::demoInput('digits_between', 'digits_between:3,5', 'number') !!}
@@ -101,7 +96,7 @@
                 <div class="col-md-9">
                     <div class="input-group">
                         <span class="input-group-addon">@</span>
-                        <input id="email" name="email" placeholder="Email" data-laraval="{{ $laraval->rule('email') }}" type="text" class="form-control" aria-describedby="emailStatus">
+                        <input id="email" name="email" placeholder="Email" data-laraval="{{ $rules['email'] }}" type="text" class="form-control" aria-describedby="emailStatus">
                     </div>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                     <span id="emailStatus" class="sr-only">(success)</span>
@@ -114,7 +109,7 @@
                 <div class="col-md-9">
                     <div class="input-group">
                         <span class="input-group-addon">#</span>
-                        <input id="url" name="url" placeholder="URL" data-laraval="{{ $laraval->rule('url') }}" type="text" class="form-control" aria-describedby="urlStatus">
+                        <input id="url" name="url" placeholder="URL" data-laraval="{{ $rules['url'] }}" type="text" class="form-control" aria-describedby="urlStatus">
                     </div>
                     <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                     <span id="urlStatus" class="sr-only">(success)</span>
@@ -128,13 +123,13 @@
                 <div class="col-md-9">
                     <div class="checkbox">
                         <label>
-                            <input name="is_admin" id="is_admin" type="checkbox" value="1" data-laraval="{{ $laraval->rule('is_admin') }}">
+                            <input name="is_admin" id="is_admin" type="checkbox" value="1" data-laraval="{{ $rules['is_admin'] }}">
                             Admin user
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input name="active" id="active" type="checkbox" value="1" data-laraval="{{ $laraval->rule('active') }}">
+                            <input name="active" id="active" type="checkbox" value="1" data-laraval="{{ $rules['active'] }}">
                             Activated
                         </label>
                     </div>

@@ -1,62 +1,62 @@
-<!---
-title: Overview
-author: Robin Radic
--->
+---
+title: Laraval
+subtitle: Laravel 5 jQuery validation
+---
 
-## Quick Installation
-If you are only interested in the client-side javascript library you could also simply download it from the repo [jquery.validate.laravel.min.js](https://github.com/RobinRadic/laraval/blob/master/resources/assets/jquery.validate.laravel.min.js).
+Laravel 5 jQuery form validation using Laravel's Validator rules. Client & Server(AJAX) validation strategies.
 
-#### Node / Bower
-If you rather not use Composer, you can also install the package using `npm` or `bower`:
-```bash
-npm install laraval
-# or
-bower install laraval
-```
+[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
-#### Composer
-Begin by installing the package through Composer.
+- You can use the `javascript` library stand-alone. The provided PHP library is optional.
+- Stand alone can **not** use the `database` validation rules.
+- Error messages can be imported straight from your `Application`'s language files. 
+- The `Laraval` PHP library provides more then a few conveinence methods. It also provides the logic for `AJAX` validation, which enables *all* validation rule methods.
+- Depends on `jQuery` and [`jquery.validate`](http://jqueryvalidation.org) JS libraries.
+- Multimple demos (local, ajax, etc) provided using Bootstrap 3.
+ 
+The package follows the FIG standards PSR-1, PSR-2, and PSR-4 to ensure a high level of interoperability between shared PHP code.
 
-```bash
-composer require radic/laraval
-```
-
-Or
-
-```json
-"require": {
-    "radic/laraval": "0.*"
-}
-```
-
-#### Laravel
-If you want to make use AJAX or rather use the provided convient initialisation methods, add the service provider and optionally the Facade;
-**config/app.php**
+### Local example
 ```php
-'providers' => [
-    Radic\Laraval\LaravalServiceProvider::class
-],
-'facades' => [
-    Radic\Laraval\Facades\Laraval::class
-]
+$rules = [
+    'title'         => 'required|max:15|alpha_num',
+    'body'          => 'required|max:255|alpha_dash',
+    'between_dates' => 'after:1/1/2000|before:1/1/2010|date',
+    'user_email'    => 'required|email',
+    'url'           => 'required|url',
+    'is_admin'      => 'boolean',
+    'active'        => 'boolean'
+];
+return View::make('myview', [
+    'rules' => $rules
+]);
+```
+view:
+```html
+<form method="POST" action="{{ url('to-the-moon') }}" >
+    <!-- You can still provide rules on the form fields, they will simply extend the form rules -->
+    <input name="user_email" data-laraval="not_in:admin@mysite.com,manager@mysite.com" type="email" >
+</form>
+{{ Laraval::local('#demo-form', $rules) }}
 ```
 
-Optionally tell artisan to publish the config and/or views
-```bash
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" #all
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" --tag="config" #just config
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" --tag="view"   #just views
-```
-
-#### Optional features
-
-
-###### FormBuilder integration
-Laraval can optionally extend the FormBuilder provided in the `laravelcollective/html` package. 
-To do so, publish the configuration and enable the option
-
+### AJAX example
 ```php
-return [
-    'enable_form_builder' => true
-]
+Route::post('validate', function(Request $request){
+    $rules = [
+        'title'         => 'required|max:15|alpha_num',
+        'body'          => 'required|max:255|alpha_dash',
+        'between_dates' => 'after:1/1/2000|before:1/1/2010|date'
+    ]
+    return Laraval::make('ajax', $rules)->validate($request);
+});
+```
+view:
+```html
+<form id="demo-form" method="POST">
+    <input type="text" name="title">
+    <input type="text" name="body">
+    <input type="date" name="between_dates">
+</form>
+{{ Laraval::ajax('#demo-form', [ 'url' => url('validate') ]) }}
 ```

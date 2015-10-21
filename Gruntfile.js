@@ -47,6 +47,9 @@ module.exports = function (_grunt) {
                 }
             }
         },
+        copy: {
+            docdemo: { cwd: 'resources/assets', src: ['demo.{css,js}', 'demo-data.json', 'jquery.validate.laravel.js', 'index.html'], dest: 'gh-pages/demo/', expand: true}
+        },
         sass    : {
             options: {sourcemap: true, style: 'expanded'},
             demo   : {files: {'<%= target.asset("demo.css") %>': '<%= target.asset("demo.scss") %>'}}
@@ -97,7 +100,7 @@ module.exports = function (_grunt) {
         ['build:dev', 'Build dev version', ['ts:dev', 'umd:validator']],
         ['build:demo', 'Build demo stuff', ['ts:demo', 'sass:demo']],
         ['build', 'Build all', ['build:dev', 'build:demo']],
-        ['dist', 'Build dist version', ['ts:dist', 'umd:validator', 'uglify:validator', 'typedoc:validator']],
+        ['dist', 'Build dist version', ['ts:dist', 'umd:validator', 'uglify:validator']],
         ['default', 'Default task (build)', ['build']]
     ].forEach(function (task) {
         grunt.registerTask(task[0], task[1], task[2]);

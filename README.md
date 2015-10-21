@@ -1,13 +1,9 @@
-Laraval
-====================
-
-<!---[![Build Status](https://img.shields.io/travis/radic/laravel-jquery-validation.svg?&style=flat-square)](https://travis-ci.org/radic/laravel-jquery-validation)
-[![Scrutinizer coverage](https://img.shields.io/scrutinizer/coverage/g/radic/laravel-jquery-validation.svg?&style=flat-square)](https://scrutinizer-ci.com/g/radic/laravel-jquery-validation)
-[![Scrutinizer quality](https://img.shields.io/scrutinizer/g/radic/laravel-jquery-validation.svg?&style=flat-square)](https://scrutinizer-ci.com/g/radic/laravel-jquery-validation)
-[![Source](http://img.shields.io/badge/source-radic/laravel-jquery-validation-blue.svg?style=flat-square)](https://github.com/radic/laravel-jquery-validation)
-[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)--->
+![Laravel logo](http://laravel.com/assets/img/laravel-logo.png)  Laraval 
+========================
 
 Laravel 5 jQuery form validation using Laravel's Validator rules. Client & Server(AJAX) validation strategies.
+
+[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
 - You can use the `javascript` library stand-alone. The provided PHP library is optional.
 - Stand alone can **not** use the `database` validation rules.
@@ -19,27 +15,25 @@ Laravel 5 jQuery form validation using Laravel's Validator rules. Client & Serve
 The package follows the FIG standards PSR-1, PSR-2, and PSR-4 to ensure a high level of interoperability between shared PHP code.
 
 
+[**Documentation**](http://robin.radic.nl/laraval) 
 
+[**Demonstration**](http://robin.radic.nl/laraval) 
 
 
 
 Quick Impression
 -------------
-[**Full documentation s00n**](#)
-
-[**PHP API Documentation s00n**](#)
-
-[**Javascript API Documentation s00n**](#)
-
-#### Client side only
 
 ```
 jquery.validate.laravel.min.js
-Size:           15.76 Kb
-Gzip Size:      4.70 Kb
+Size:           16.01 Kb
+Gzip Size:      4.79 Kb
 ```
 
-By simple including the `jquery.validate.js` & `jquery.validate.laraval.js` you will be able to use Laravel's (5.x) validation rules like this:
+### Client side
+
+
+By including the `jquery.validate.js` & `jquery.validate.laraval.js` you will be able to use Laravel's (5.x) validation rules like this:
 
 ```html
 <input 
@@ -49,18 +43,11 @@ By simple including the `jquery.validate.js` & `jquery.validate.laraval.js` you 
 >
 ```
 
-Or simply passing the complete validation rules as json_encoded object to your view and dropping it onto your form:
-
-**Controller/route handler**
+### Local example
 ```php
 $rules = [
     'title'         => 'required|max:15|alpha_num',
     'body'          => 'required|max:255|alpha_dash',
-    'json'          => 'json',
-    'ip'            => 'ip',
-    'age'           => 'required|between:18,30|numeric',
-    'born'          => 'required|date|after:1/1/2000',
-    'died'          => 'required|date|after:born',
     'between_dates' => 'after:1/1/2000|before:1/1/2010|date',
     'user_email'    => 'required|email',
     'url'           => 'required|url',
@@ -68,123 +55,40 @@ $rules = [
     'active'        => 'boolean'
 ];
 return View::make('myview', [
-    'rules' => json_encode($rules)
+    'rules' => $rules
 ]);
 ```
-
-**myview.blade.php**
+view:
 ```html
-<form data-laraval="{!! $rules !!}" method="POST" action="{{ url('to-the-moon') }}" >
+<form method="POST" action="{{ url('to-the-moon') }}" >
     <!-- You can still provide rules on the form fields, they will simply extend the form rules -->
     <input name="user_email" data-laraval="not_in:admin@mysite.com,manager@mysite.com" type="email" >
 </form>
+{{ Laraval::local('#demo-form', $rules) }}
 ```
 
-#### AJAX validation
-Using the AJAX validation strategy is probably the quickest, easiest and most effective way.
-**FormController.php**
+### AJAX example
 ```php
-use Radic\Laraval\Contracts\Factory;
-
-class FormController extends DemoController
-{
-    protected $laraval;
-    protected $rules = [ ]; //All rules can be used   
-    public function __construct(Factory $factory)
-    {
-        $this->laraval = $factory->make('ajax', $this->rules);
-    }
-    public function show()
-    {
-        return view('my-awesome-view', [
-            'laraval' => $this->laraval
-        ]);
-    }
-    public function ajaxValidate(Request $request)
-    {
-        return $this->laraval->validate($request, $this->rules);
-    }
-}
+Route::post('validate', function(Request $request){
+    $rules = [
+        'title'         => 'required|max:15|alpha_num',
+        'body'          => 'required|max:255|alpha_dash',
+        'between_dates' => 'after:1/1/2000|before:1/1/2010|date'
+    ]
+    return Laraval::make('ajax', $rules)->validate($request);
+});
 ```
-
-**my-awesome-view.blade.php**  
-
-Use the `init(array $defaults = [])` option and then the `make($jQuerySelector, array $pluginOptions = [])` method **After including the javascript dependencies**
-```php
-<form id="awesome-form">
-<!-- ... form elements ... -->
+view:
+```html
+<form id="demo-form" method="POST">
+    <input type="text" name="title">
+    <input type="text" name="body">
+    <input type="date" name="between_dates">
 </form>
-
-<script src="{{ asset('jquery.js') }}"></script>
-<script src="{{ asset('jquery.validate.js') }}"></script>
-<script src="{{ asset('vendor/laraval/jquery.validate.laraval.min.js') }}"></script>
-
-{!! $laraval->init() !!}
-{!! $laraval->make('form#awesome-form', [ 'url' => route('route.to.ajaxValidate') ]) !!}
-
-</body>
+{{ Laraval::ajax('#demo-form', [ 'url' => url('validate') ]) }}
 ```
 
-**Check the demo [views](https://github.com/RobinRadic/laraval/tree/master/resources/views/demo) and [controllers](https://github.com/RobinRadic/laraval/tree/master/src/Http/Controllers/Demo) for more exampels**
 
-
-
-Installation
--------------
-If you are only interested in the client-side javascript library you could also simply download it from the repo [jquery.validate.laravel.min.js](https://github.com/RobinRadic/laraval/blob/master/resources/assets/jquery.validate.laravel.min.js).
-
-#### Node / Bower
-If you rather not use Composer, you can also install the package using `npm` or `bower`:
-```bash
-npm install laraval
-# or
-bower install laraval
-```
-
-#### Composer
-Begin by installing the package through Composer.
-
-```bash
-composer require radic/laraval
-```
-
-Or
-
-```json
-"require": {
-    "radic/laraval": "0.*"
-}
-```
-
-#### Laravel
-If you want to make use AJAX or rather use the provided convient initialisation methods, add the service provider and optionally the Facade;
-**config/app.php**
-```php
-'providers' => [
-    Radic\Laraval\LaravalServiceProvider::class
-],
-'facades' => [
-    Radic\Laraval\Facades\Laraval::class
-]
-```
-
-Optionally tell artisan to publish the config and/or views
-```bash
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" #all
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" --tag="config" #just config
-php artisan vendor:publish --provider="Radic\Laraval\LaravalServiceProvider" --tag="view"   #just views
-```
-
-#### Optional features
-
-
-###### FormBuilder integration
-Laraval can optionally extend the FormBuilder provided in the `laravelcollective/html` package if you have it. 
-To do so, publish the configuration and enable the option
-
-```php
-return [
-    'enable_form_builder' => true,
-    // ...
-]
-```
+### Copyright/License
+Copyright 2015 [Robin Radic](https://github.com/RobinRadic) - [MIT Licensed](http://radic.mit-license.org) 
+ 

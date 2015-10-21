@@ -20,8 +20,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'Radic\Laraval\Http\Controllers';
-    protected $demoNamespace = 'Radic\Laraval\Http\Controllers\Demo';
+    protected $namespace = 'Radic\Laraval\Http\Controllers\Demo';
 
     /**
      * Boot Codex's route service provider.
@@ -58,20 +57,12 @@ class RouteServiceProvider extends ServiceProvider
             $router->group([
                 'as'        => 'laraval::demo.',
                 'prefix'    => 'laraval',
-                'namespace' => $this->demoNamespace
+                'namespace' => $this->namespace
             ], function (Router $router) {
-
-                require(realpath(__DIR__ . '/../Http/routes-demo.php'));
+                require(realpath(__DIR__ . '/../Http/routes.php'));
             });
         }
 
-        $router->group([
-            'as' => 'laraval::',
-            'prefix' => 'laraval',
-            'namespace' => $this->namespace
-        ], function (Router $router) {
-            require(realpath(__DIR__.'/../Http/routes.php'));
-        });
 
 
     }

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Local Demo ::
+        Laraval - Laravel jQuery Validation
+
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/superhero/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/zenburn.min.css">
+    <link rel="stylesheet" href="demo.css">
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                Laraval
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Demonstration</a></li>
+                <li ><a href="../index.html">Documentation</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://github.com/robinradic/laraval" target="_blank">Github</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid" id="content">
+    <div class="container" id="errors">
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form
+                id="demo-form-laraval"
+                method="POST"
+                class="form-horizontal">
+                <input type="hidden" name="_token" value="8u8i6e84uwqU1xZ9KFYKZT33m6Ae2tv3I9ymOl6r">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>General</h></div></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="title">Title</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="title" name="title" placeholder="Title"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="body">Body</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="body" name="body" placeholder="Body"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="json">JSON</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="json" name="json" placeholder="JSON"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="ip">Ip</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="ip" name="ip" placeholder="Ip"
+                                >
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>Dates</h></div></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="born">Born</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="date" id="born" name="born" placeholder="Born"
+                                >
+                                <span class="help-block help-block-sm"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="died">Died</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="date" id="died" name="died" placeholder="Died"
+                                >
+                                <span class="help-block help-block-sm"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="between_dates">Between dates</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="date" id="between_dates" name="between_dates" placeholder="Between dates"
+                                >
+                                <span class="help-block help-block-sm"></span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>Numbers &amp; integers</h></div></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="age">Age</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="number" id="age" name="age" placeholder="Age"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="integer">Integer</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="number" id="integer" name="integer" placeholder="Integer"
+                                       data-laraval="integer"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="digits">Digits</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="number" id="digits" name="digits" placeholder="Digits"
+                                       data-laraval="digits:5"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="digits_between">Digits between</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="number" id="digits_between" name="digits_between" placeholder="Digits between"
+                                       data-laraval="digits_between:3,5"
+                                >
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>Required variations</h></div></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="required_if">if</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="required_if" name="required_if" placeholder="if"
+                                       data-laraval="required_if:title,hello"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="required_with">with</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="required_with" name="required_with" placeholder="with"
+                                       data-laraval="required_with:title,body"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="required_with_all">with all</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="required_with_all" name="required_with_all" placeholder="with all"
+                                       data-laraval="required_with_all:title,body"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="required_with_all2">with all</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="required_with_all2" name="required_with_all2" placeholder="with all"
+                                       data-laraval="required_with_all:title,body,unexisting"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="required_without">with</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="required_without" name="required_without" placeholder="with"
+                                       data-laraval="required_without:title,body"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="required_without_all">with</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="required_without_all" name="required_without_all" placeholder="with"
+                                       data-laraval="required_without_all:title,body"
+                                >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>Special</h></div></div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>Comparing</h></div></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="compare_same">Same</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="compare_same" name="compare_same" placeholder="Same"
+                                       data-laraval="same:title"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="compare_different">Different</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="compare_different" name="compare_different" placeholder="Different"
+                                       data-laraval="different:title"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="compare_in">in</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="compare_in" name="compare_in" placeholder="in"
+                                       data-laraval="in:foo,boo,da"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="compare_not_int">Not in</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="compare_not_int" name="compare_not_int" placeholder="Not in"
+                                       data-laraval="not_in:foo,boo,da"
+                                >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>Size</h></div></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="size_string">String</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="size_string" name="size_string" placeholder="String"
+                                       data-laraval="size:5"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="size_number">Number</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="number" id="size_number" name="size_number" placeholder="Number"
+                                       data-laraval="size:5"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="size_file">File</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="file" id="size_file" name="size_file" placeholder="File"
+                                       data-laraval="size:5"
+                                >
+                                <span class="help-block help-block-sm">size:5</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>Min</h></div></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="min_string">String</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="min_string" name="min_string" placeholder="String"
+                                       data-laraval="min:5"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="min_number">Number</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="number" id="min_number" name="min_number" placeholder="Number"
+                                       data-laraval="min:5"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="min_file">File</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="file" id="min_file" name="min_file" placeholder="File"
+                                       data-laraval="min:5"
+                                >
+                                <span class="help-block help-block-sm">min:5</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4>Max</h></div></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="max_string">String</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="text" id="max_string" name="max_string" placeholder="String"
+                                       data-laraval="max:5"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="max_number">Number</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="number" id="max_number" name="max_number" placeholder="Number"
+                                       data-laraval="max:5"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="max_file">File</label>
+
+                            <div class="col-md-9">
+                                <input class="form-control input-sm" type="file" id="max_file" name="max_file" placeholder="File"
+                                       data-laraval="max:5"
+                                >
+                                <span class="help-block help-block-sm">max:5</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group form-group-title"><div class="col-md-offset-3 col-md-9"><h4></h></div></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col-md-8">
+                        <div class="form-group has-feedback">
+                            <label class="control-label col-md-3" for="email">Email</label>
+
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">@</span>
+                                    <input id="email" name="email" placeholder="Email" data-laraval="required|email" type="text" class="form-control" aria-describedby="emailStatus">
+                                </div>
+                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                <span id="emailStatus" class="sr-only">(success)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <label class="control-label col-md-3" for="url">URL</label>
+
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">#</span>
+                                    <input id="url" name="url" placeholder="URL" data-laraval="required|url" type="text" class="form-control" aria-describedby="urlStatus">
+                                </div>
+                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                <span id="urlStatus" class="sr-only">(success)</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Options</label>
+
+                            <div class="col-md-9">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="is_admin" id="is_admin" type="checkbox" value="1" data-laraval="boolean">
+                                        Admin user
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="active" id="active" type="checkbox" value="1" data-laraval="boolean">
+                                        Activated
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
+
+
+                <div class="form-actions">
+                    <div class="btn-group btn-group-sm">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-success action-validate">Validate</button>
+                        <button type="button" class="btn btn-success action-validate-focused">Validate</button>
+                    </div>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-info action-random">Random fill</button>
+                        <button type="button" class="btn btn-info action-clear-validation">Clear validation</button>
+                        <button type="button" class="btn btn-info action-clear-values">Clear values</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4 fade" id="demo-code-preview">
+        </div>
+    </div>
+</div>
+
+<!-- laraval & dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+<script src="jquery.validate.laravel.js"></script>
+
+<!-- demo scripts -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.6/jquery.slimscroll.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+<script src="demo.js"></script>
+
+<script id="init-laraval">$.extend(true, $.validator.defaults.laraval, {
+    "enabled": true,
+    "strategy": "local",
+    "dataAttribute": "laraval",
+    "url": "",
+    "crsfTokenKey": "_token"
+});</script>
+
+
+<script>
+    // Bootstrap 3 styling
+    $.validator.setDefaults({
+        highlight  : function (element) {
+            //console.log('highlight', arguments);
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+
+        errorElement  : 'span',
+        errorClass    : 'help-block help-block-error pull-left',
+        errorPlacement: function (error, element) {
+            if ( element.parent('.input-group').length ) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    demo.extend({
+        jsonFilePath: 'demo-data.json'
+    });
+</script>
+
+<script id="init-script">$(function () {
+    var $form = $('form#demo-form-laraval');
+    $form.data('laraval', {
+        "title": "required|max:15|alpha_num",
+        "body": "required|max:255|alpha_dash",
+        "json": "json",
+        "ip": "ip",
+        "age": "required|between:18,30|numeric",
+        "born": "required|date|after:1\/1\/2000",
+        "died": "required|date|after:born",
+        "between_dates": "after:1\/1\/2000|before:1\/1\/2010|date",
+        "email": "required|email",
+        "url": "required|url",
+        "is_admin": "boolean",
+        "active": "boolean"
+    });
+    var validator = $form.validate({
+        "laraval": {
+            "messages": {
+                "accepted": "The :attribute must be accepted.",
+                "active_url": "The :attribute is not a valid URL.",
+                "after": "The :attribute must be a date after :date.",
+                "alpha": "The :attribute may only contain letters.",
+                "alpha_dash": "The :attribute may only contain letters, numbers, and dashes.",
+                "alpha_num": "The :attribute may only contain letters and numbers.",
+                "array": "The :attribute must be an array.",
+                "before": "The :attribute must be a date before :date.",
+                "between_numeric": "The :attribute must be between :min and :max.",
+                "between_file": "The :attribute must be between :min and :max kilobytes.",
+                "between_string": "The :attribute must be between :min and :max characters.",
+                "between_array": "The :attribute must have between :min and :max items.",
+                "boolean": "The :attribute field must be true or false.",
+                "confirmed": "The :attribute confirmation does not match.",
+                "date": "The :attribute is not a valid date.",
+                "date_format": "The :attribute does not match the format :format.",
+                "different": "The :attribute and :other must be different.",
+                "digits": "The :attribute must be :digits digits.",
+                "digits_between": "The :attribute must be between :min and :max digits.",
+                "email": "The :attribute must be a valid email address.",
+                "exists": "The selected :attribute is invalid.",
+                "filled": "The :attribute field is required.",
+                "image": "The :attribute must be an image.",
+                "in": "The selected :attribute is invalid.",
+                "integer": "The :attribute must be an integer.",
+                "ip": "The :attribute must be a valid IP address.",
+                "max_numeric": "The :attribute may not be greater than :max.",
+                "max_file": "The :attribute may not be greater than :max kilobytes.",
+                "max_string": "The :attribute may not be greater than :max characters.",
+                "max_array": "The :attribute may not have more than :max items.",
+                "mimes": "The :attribute must be a file of type: :values.",
+                "min_numeric": "The :attribute must be at least :min.",
+                "min_file": "The :attribute must be at least :min kilobytes.",
+                "min_string": "The :attribute must be at least :min characters.",
+                "min_array": "The :attribute must have at least :min items.",
+                "not_in": "The selected :attribute is invalid.",
+                "numeric": "The :attribute must be a number.",
+                "regex": "The :attribute format is invalid.",
+                "required": "The :attribute field is required.",
+                "required_if": "The :attribute field is required when :other is :value.",
+                "required_with": "The :attribute field is required when :values is present.",
+                "required_with_all": "The :attribute field is required when :values is present.",
+                "required_without": "The :attribute field is required when :values is not present.",
+                "required_without_all": "The :attribute field is required when none of :values are present.",
+                "same": "The :attribute and :other must match.",
+                "size_numeric": "The :attribute must be :size.",
+                "size_file": "The :attribute must be :size kilobytes.",
+                "size_string": "The :attribute must be :size characters.",
+                "size_array": "The :attribute must contain :size items.",
+                "string": "The :attribute must be a string.",
+                "timezone": "The :attribute must be a valid zone.",
+                "unique": "The :attribute has already been taken.",
+                "url": "The :attribute format is invalid.",
+                "custom_attribute-name_rule-name": "custom-message"
+            },
+            "strategy": "local"
+        }
+    });
+});
+</script>
+<script> $(function () {
+    demo.init();
+}); </script>
+
+
+
+</body>
+</html>

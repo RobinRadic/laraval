@@ -279,7 +279,7 @@ var laraval;
     laraval.ruleBindings = {
         'accepted': bindingWithParam('accepted'),
         'alpha': 'alpha',
-        'alpha_num': 'alphanumeric',
+        'alpha_num': 'alpha_num',
         'alpha_dash': 'alpha_dash',
         'after': bindingWithParam('after'),
         'before': bindingWithParam('before'),
@@ -365,11 +365,12 @@ var laraval;
                 enabled: false,
                 strategy: 'local',
                 dataAttribute: 'laraval',
+                messages: {},
                 url: '',
                 singleFieldReferenceKey: '',
                 crsfTokenKey: '_token',
                 crsfToken: function (validator) {
-                    validator.findByName(validator.settings.laraval.crsfToken).val();
+                    return validator.findByName(validator.settings.laraval.crsfToken).val();
                 },
                 ajaxSettings: $.extend({}, $.ajaxSettings, {
                     method: 'post',
@@ -394,6 +395,12 @@ var laraval;
                 if (this.settings.laraval.strategy === 'ajax') {
                     this.settings.showErrors = laraval.ajaxStrategy.showErrors.bind(this);
                 }
+                else {
+                    var messages = this.settings.laraval.messages;
+                    if (laraval.defined(messages) && Object.keys(messages).length > 0) {
+                        laraval.addMessages(messages);
+                    }
+                }
                 return _init.call(this);
             }
             prototype.init = init;
@@ -403,18 +410,20 @@ var laraval;
                     $.extend(this.submitted, this.errorMap);
                     this.invalid = $.extend({}, this.errorMap);
                     var validator = this;
-                    console.log('validate ajax form', $.extend(true, {}, validator));
+                    laraval.log('validate ajax form', $.extend(true, {}, validator));
                     $.ajax($.extend(true, {}, this.settings.laraval.ajaxSettings, {
                         url: this.settings.laraval.url,
                         data: $(this.currentForm).serializeArray(),
                         success: function (response) {
-                            console.log('ajax method', response);
+                            laraval.log('ajax method', response);
                             var errors = {};
-                            $.each(response, function (name, msg) {
-                                if (validator.findByName(name).length > 0) {
-                                    errors[name] = msg;
-                                }
-                            });
+                            if (Object.keys(response).length > 0) {
+                                $.each(response, function (name, msg) {
+                                    if (validator.findByName(name).length > 0) {
+                                        errors[name] = msg;
+                                    }
+                                });
+                            }
                             if (validator.settings.laraval.formValidationSuccess) {
                                 validator.settings.laraval.formValidationSuccess.call(validator, response, errors);
                             }
@@ -443,7 +452,7 @@ var laraval;
                         url: this.settings.laraval.url,
                         data: data,
                         success: function (response) {
-                            console.log('ajax element', response);
+                            laraval.log('ajax element', response);
                             var errors = {};
                             if (checkElement === 'undefined') {
                                 delete validator.invalid[cleanElement.name];
@@ -474,7 +483,7 @@ var laraval;
                     }));
                 }
                 else {
-                    return _element.call(this);
+                    return _element.call(this, element);
                 }
             }
             prototype.element = element;
@@ -490,7 +499,7 @@ var laraval;
             function stopRequest(element, valid) {
                 _stopRequest.apply(this, [element, valid]);
                 if (laraval.DEBUG && this['pendingRequest'] === 0) {
-                    console.log('this.pendingRequest = 0');
+                    laraval.log('this.pendingRequest = 0');
                     console.profileEnd();
                     console.groupEnd();
                     console.timeEnd('Validation Request');
@@ -569,7 +578,7 @@ var laraval;
                         size += file.size;
                     });
                 }
-                console.log('file size ', size, element);
+                laraval.log('file size ', size, element);
                 return size;
             }
             else {
@@ -578,6 +587,9 @@ var laraval;
         }
         var _m = $.validator.methods;
         validator.methods = {
+            alpha_num: function (value, element, param) {
+                return this.optional(element) || /^\w+$/i.test(value);
+            },
             alpha: function (value, element, param) {
                 return this.optional(element) || /^[a-z]+$/i.test(value);
             },
@@ -814,6 +826,11 @@ var laraval;
         else if (type === 'function') {
             $.extend(rules, binding.call(element, element, rule));
         }
+        Object.keys(rules).forEach(function (method) {
+            if (method in $.validator.methods === false) {
+                throw new Error('Laraval rule binding [' + rule.name + '] resolves to undefined validator method [' + method + ']');
+            }
+        });
         return rules;
     }
     laraval.convertRule = convertRule;
@@ -902,11 +919,6 @@ var laraval;
         return type;
     }
     laraval.getElementType = getElementType;
-    function addConfig(config) {
-        if (config === void 0) { config = {}; }
-        $.extend($.validator.defaults.laraval.config, config);
-    }
-    laraval.addConfig = addConfig;
 })(laraval || (laraval = {}));
 $.extend(true, $.validator, laraval.validator);
 $.validator.laraval = laraval;

@@ -11,15 +11,66 @@ module laraval {
     }
 
     export interface LaravalOptions {
+        /**
+         * Enable laraval for this validator
+         */
         enabled?:boolean;
-        mode?:string;
+
+        /**
+         * The strategy to use (like 'local' or 'ajax')
+         */
+        strategy?:string;
+
+        /**
+         * The data attribute name to use, defaults to 'laraval'
+         */
         dataAttribute?:string;
-        config?:any;
+
+        /**
+         * Validation messages, directly import from laravel language files. Will be automaticly processed.
+         */
+        messages?:{[ruleName:string]: string};
+
+        /**
+         * For 'ajax', the url that processes the ajax validation calls
+         */
         url?:string;
-        ajaxSettings?: JQueryAjaxSettings;
-        crsfTokenKey?:string;
-        crsfToken(validator):string;
+
+        /**
+         * If/when the value of singleFieldReferenceKey is used as key in the AJAX validation request
+         * then the AjaxValidationStrategy knows it only needs to validate the field that is specified as value
+         */
         singleFieldReferenceKey?:string;
+
+        /**
+         * The token key, defaults to _token
+         */
+        crsfTokenKey?:string;
+
+        /**
+         * Method to get the crsf token from the form.
+         * @param validator
+         */
+        crsfToken(validator):string;
+
+        /**
+         * Default ajax settings, similar to $.ajaxSettings
+         */
+        ajaxSettings?: JQueryAjaxSettings;
+
+        /**
+         * Callback for successful form validation
+         * @param response
+         * @param errors
+         */
+        formValidationSuccess(response:any, errors:any): void
+
+        /**
+         * Callback for sucessful element validation
+         * @param response
+         * @param errors
+         */
+        elementValidationSuccess(response:any, errors:any): void
     }
 
     export function convertRule(element:HTMLInputElement, rule:LaravalRule):any {

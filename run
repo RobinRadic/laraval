@@ -23,4 +23,21 @@ preupdate(){
     git push -u origin "$(git_current_branch)"
 }
 
+ghpages(){
+
+    rm -rf gh-pages
+
+    docgen generate
+    grunt copy:docdemo
+
+    cd gh-pages
+    git init
+    git checkout -b gh-pages
+    git remote add origin https://github.com/robinradic/laraval
+    git add -A
+    git commit -m "new"
+    git push -u origin gh-pages --force
+
+}
+
 $*

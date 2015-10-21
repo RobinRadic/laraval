@@ -7,8 +7,7 @@
 namespace Radic\Laraval\Strategies;
 
 use Caffeinated\Beverage\Filesystem;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Contracts\Validation\Factory as ValidationFactory;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Support\Collection;
 use Radic\Laraval\Contracts\Factory as LaravalFactory;
@@ -41,22 +40,12 @@ abstract class ValidationStrategy
     /**
      * @var string
      */
-    protected $viewFile;
+    protected $view = 'laraval::create';
 
     /**
      * @var \Illuminate\Contracts\View\Factory
      */
     protected $viewFactory;
-
-    /**
-     * @var \Illuminate\Contracts\Validation\Factory
-     */
-    protected $validationFactory;
-
-    /**
-     * @var \Illuminate\Contracts\Routing\ResponseFactory
-     */
-    protected $responseFactory;
 
     /**
      * @var \Illuminate\Support\Collection
@@ -82,56 +71,56 @@ abstract class ValidationStrategy
     /** Instantiates the class
      *
      * @param \Radic\Laraval\Contracts\Factory|\Radic\Laraval\Factory $factory
+     * @param \Illuminate\Contracts\Container\Container               $container
      * @param \Caffeinated\Beverage\Filesystem                        $files
      * @param \Illuminate\Contracts\View\Factory                      $viewFactory
      * @param \Illuminate\Contracts\Validation\Factory                $validationFactory
      * @param \Illuminate\Contracts\Routing\ResponseFactory           $responseFactory
      * @param array                                                   $rules
      */
-    public function __construct(LaravalFactory $factory, Filesystem $files, ViewFactory $viewFactory, ValidationFactory $validationFactory, ResponseFactory $responseFactory, array $rules = [ ])
+    public function __construct(LaravalFactory $factory, Container $container, Filesystem $files, ViewFactory $viewFactory, array $rules = [ ])
     {
-        $this->factory           = $factory;
-        $this->files             = $files;
-        $this->viewFactory       = $viewFactory;
-        $this->validationFactory = $validationFactory;
-        $this->responseFactory   = $responseFactory;
-        $this->rules             = new Collection($rules);
-        $this->validatorOptions  = new Collection();
+        $this->factory          = $factory;
+        $this->files            = $files;
+        $this->viewFactory      = $viewFactory;
+        $this->rules            = new Collection($rules);
+        $this->validatorOptions = new Collection();
 
-        $this->embed       = true;
-        $this->initialised = false;
+        $this->embed = true;
+        if (method_exists($this, 'init')) {
+            $container->call([ $this, 'init' ]);
+        }
     }
 
+    /**
+     * Returns the name of the strategy, used in the factory's make/create methods
+     *
+     * @return string
+     */
     abstract public function getName();
 
-    public function init(array $options = [ ], $force = false)
+    /**
+     * Returns javascript that will bind the validation plugin to the specified form
+     *
+     * @param string $selector - CSS3 selector that selects the form to validate
+     * @param array  $options  - Will be json_encode & passed to the $(form).validate(); call
+     * @param array  $data     - Override view data
+     * @return string
+     */
+    public function create($selector = 'form', array $options = [ ], array $data = [ ])
     {
-        if (! $this->initialised || $force === true) {
-            $this->initialised = true;
-            $options           = array_replace_recursive([
-                'defaults' => array_replace($this->factory->config('client_defaults'), [
-                    'strategy' => $this->getName()
-                ])
-            ], $options);
-
-
-            return view($this->viewFile, $this->optionValuesToJson($options))->render();
-        }
-
-        return '';
-    }
-
-    public function make($selector = 'form', array $options = [ ], $debug = false)
-    {
+        $options[ 'strategy' ] = $this->getName();
         $this->validatorOptions->put('laraval', $options);
 
-        return $this->viewFactory->make($this->factory->config('views.make'), [
+        $data = array_replace_recursive([
             'selector'        => $selector,
+            'rules'           => $this->rules,
             'embedAttributes' => $this->embedAttributes,
             'embed'           => $this->embed,
-            'options'         => $this->validatorOptions,
-            'debug'           => $debug
-        ])->render();
+            'options'         => $this->validatorOptions
+        ], $data);
+
+        return $this->viewFactory->make($this->view, $data)->render();
     }
 
     protected function optionValuesToJson($options)
@@ -169,20 +158,20 @@ abstract class ValidationStrategy
      *
      * @return mixed
      */
-    public function getViewFile()
+    public function getView()
     {
-        return $this->viewFile;
+        return $this->view;
     }
 
     /**
      * Set the viewFile value
      *
-     * @param mixed $viewFile
+     * @param mixed $view
      * @return ValidationStrategy
      */
-    public function setViewFile($viewFile)
+    public function setView($view)
     {
-        $this->viewFile = $viewFile;
+        $this->view = $view;
 
         return $this;
     }
@@ -217,19 +206,9 @@ abstract class ValidationStrategy
      */
     public function setRules($rules)
     {
-        $this->rules = $rules;
+        $this->rules = new Collection($rules);
 
         return $this;
-    }
-
-    /**
-     * get validatorOptions value
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function getOptions()
-    {
-        return $this->validatorOptions;
     }
 
     /**
@@ -254,30 +233,6 @@ abstract class ValidationStrategy
     public function setOption($key, $val)
     {
         $this->validatorOptions->put($key, $val);
-
-        return $this;
-    }
-
-
-    /**
-     * get validator value
-     *
-     * @return ValidationFactory
-     */
-    public function getValidationFactory()
-    {
-        return $this->validationFactory;
-    }
-
-    /**
-     * Set the validator value
-     *
-     * @param ValidationFactory $validationFactory
-     * @return ValidationStrategy
-     */
-    public function setValidationFactory($validationFactory)
-    {
-        $this->validationFactory = $validationFactory;
 
         return $this;
     }
@@ -329,29 +284,6 @@ abstract class ValidationStrategy
     }
 
     /**
-     * get response value
-     *
-     * @return ResponseFactory
-     */
-    public function getResponseFactory()
-    {
-        return $this->responseFactory;
-    }
-
-    /**
-     * Set the response value
-     *
-     * @param ResponseFactory $responseFactory
-     * @return ValidationStrategy
-     */
-    public function setResponseFactory($responseFactory)
-    {
-        $this->responseFactory = $responseFactory;
-
-        return $this;
-    }
-
-    /**
      * is embed value
      *
      * @return boolean
@@ -393,6 +325,29 @@ abstract class ValidationStrategy
     public function setEmbedAttributes($embedAttributes)
     {
         $this->embedAttributes = $embedAttributes;
+
+        return $this;
+    }
+
+    /**
+     * get validatorOptions value
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getValidatorOptions()
+    {
+        return $this->validatorOptions;
+    }
+
+    /**
+     * Set the validatorOptions value
+     *
+     * @param \Illuminate\Support\Collection $validatorOptions
+     * @return ValidationStrategy
+     */
+    public function setValidatorOptions($validatorOptions)
+    {
+        $this->validatorOptions = $validatorOptions;
 
         return $this;
     }

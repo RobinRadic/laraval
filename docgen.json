@@ -1,0 +1,91 @@
+{
+    "title": "Laraval documentation",
+    "logo": {
+        "text": "Laraval",
+        "size": 25,
+        "x": 0,
+        "y": 0
+    },
+    "copyright": "Copyright 2015 &copy; Robin Radic",
+    "docs": "docs",
+    "dest": "gh-pages",
+    "index": "docs/index.md",
+    "generators": {
+        "typedoc": {
+            "laraval": {
+                "files": [
+                    "resources/assets/{lib,types}/**/*.ts",
+                    "resources/assets/jquery.validate.laravel.ts"
+                ],
+                "options": {
+                    "name": "Scripting API",
+                    "module": "commonjs",
+                    "rootDir": "./",
+                    "target": "es5",
+                    "mode": "file",
+                    "experimentalDecorators": "",
+                    "entryPoint": "laraval",
+                    "readme": "docs/javascript-api.md"
+                }
+            }
+        }
+    },
+    "menu": [
+        {
+            "name": "Home",
+            "type": "index",
+            "icon": "fa fa-home"
+        },
+        {"name": "Documentation", "type": "heading"},
+        {
+            "name": "Installation",
+            "doc": "installation.md",
+            "type": "doc",
+            "icon": "fa fa-archive"
+        },
+        {
+            "name": "Basic usage",
+            "doc": "basic-usage.md",
+            "type": "doc",
+            "icon": "fa fa-ambulance"
+        },
+        {
+            "name": "Validation strategies",
+            "doc": "validation-strategies.md",
+            "type": "doc",
+            "icon": "fa fa-book"
+        },
+        {"name": "API", "type": "heading"},
+        {
+            "name": "Javascript",
+            "typedoc": "laraval",
+            "type": "typedoc",
+            "icon": "fa fa-code color-red-700"
+        },
+        {
+            "name": "PHP",
+            "href": "#",
+            "type": "href",
+            "icon": "fa fa-code color-green-700"
+        },
+        {"name": "Miscellaneous", "type": "heading"},
+        {
+            "name": "Bootstrap 3 style",
+            "doc": "bootstrap3-style.md",
+            "type": "doc",
+            "icon": "fa fa-paint-brush"
+        },
+        {
+            "name": "Demonstration",
+            "href": "http://robin.radic.nl/laraval/demo/index.html",
+            "type": "href",
+            "icon": "fa fa-play-circle-o"
+        },
+        {
+            "name": "Github",
+            "href": "https://github.com/robinradic/laraval",
+            "type": "href",
+            "icon": "fa fa-github"
+        }
+    ]
+}

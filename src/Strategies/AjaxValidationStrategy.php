@@ -7,11 +7,12 @@
 namespace Radic\Laraval\Strategies;
 
 use Caffeinated\Beverage\Arr;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 /**
- * This is the LocalValidationMode.
+ * This is the AjaxValidationStrategy.
  *
  * @package        Radic\Laraval
  * @author         Caffeinated Dev Team
@@ -21,9 +22,17 @@ use Illuminate\Support\Collection;
 class AjaxValidationStrategy extends ValidationStrategy
 {
 
-    protected $viewFile = 'laraval::init-ajax';
-
     protected $singleFieldReferenceKey = '__laraval_validate_field_name';
+
+    /**
+     * @var \Illuminate\Contracts\Validation\Factory
+     */
+    protected $validationFactory;
+
+    /**
+     * @var \Illuminate\Contracts\Routing\ResponseFactory
+     */
+    protected $responseFactory;
 
     /**
      * @inheritDoc
@@ -33,38 +42,68 @@ class AjaxValidationStrategy extends ValidationStrategy
         return 'ajax';
     }
 
-    public function init(array $options = [ ], $force = false)
+    /**
+     * init
+     *
+     * @param \Illuminate\Contracts\Validation\Factory      $validationFactory
+     * @param \Illuminate\Contracts\Routing\ResponseFactory $responseFactory
+     */
+    public function init(ValidationFactory $validationFactory, ResponseFactory $responseFactory)
     {
-        return parent::init(array_replace_recursive([
-            'defaults' => [
-                'singleFieldReferenceKey' => $this->singleFieldReferenceKey
-            ]
-        ], $options), $force);
+        $this->validationFactory = $validationFactory;
+        $this->responseFactory   = $responseFactory;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function create($selector = 'form', array $options = [ ], array $data = [ ])
+    {
+        $options = array_replace_recursive([
+            //'messages' => static::flatten($this->messages)
+        ], $options);
+
+        $data = array_replace_recursive([
+            'rules' => null
+        ], $data);
+
+        return parent::create($selector, $options, $data);
+    }
+
+    /**
+     * Validates a AJAX validation request and returns a JsonResponse
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param array                    $rules
+     * @param array                    $messages
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function validate(Request $request, array $rules = [ ], array $messages = [ ])
     {
-        $this->getRules()->merge($rules);
+        $rules = $this->getRules()->merge($rules)->toArray();
 
         if ($singleField = $request->has($this->singleFieldReferenceKey)) {
-            $fields = [$request->get($this->singleFieldReferenceKey)];
+            $fields = [ $request->get($this->singleFieldReferenceKey) ];
         } else {
             $fields = Arr::keys($this->getRules()->toArray());
         }
 
-        $validator = $this->getValidationFactory()->make($request->only($fields), Arr::only($rules, $fields), $messages);
+        $data = $request->only($fields);
+        $rules = Arr::only($rules, $fields);
 
+        $validator = $this->validationFactory->make($data, $rules, $messages);
 
         if ($validator->fails()) {
-            $messages  = $validator->getMessageBag();
+            $messages = $validator->getMessageBag();
 
             if ($singleField) {
                 $fieldName = $request->get($this->singleFieldReferenceKey);
+
                 return $this->jsonResponse([ $fieldName => $messages->first($fieldName) ]);
             } else {
-                $response = [];
+                $response = [ ];
                 foreach ($messages->keys() as $key) {
-                    $response[$key] = $messages->first($key);
+                    $response[ $key ] = $messages->first($key);
                 };
 
                 return $this->jsonResponse($response);
@@ -74,9 +113,9 @@ class AjaxValidationStrategy extends ValidationStrategy
         }
     }
 
-    protected function jsonResponse($data = [], $status = 200)
+    protected function jsonResponse($data = [ ], $status = 200)
     {
-        return $this->getResponseFactory()->json($data, $status);
+        return $this->responseFactory->json($data, $status);
     }
 
     /**

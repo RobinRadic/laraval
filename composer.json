@@ -15,8 +15,7 @@
         "caffeinated/beverage": "~3.0"
     },
     "require-dev": {
-        "caffeinated/dev": "dev-master@dev",
-        "laravelcollective/html": "~5.0"
+        "caffeinated/dev": "dev-master@dev"
     },
     "suggest": {
         "laravelcollective/html": "Laraval provides several extensions based on the Form builders from Laravel Collective. Easy form building with awesome validation!"

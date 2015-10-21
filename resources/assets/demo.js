@@ -217,9 +217,10 @@ var demo;
             });
             demo.CP.init();
             demo.CP.add('Init', true)
-                .addCode('Init laraval', "{!! $laraval->init($options = []) !!}", 'php', true)
-                .addCode('Generates', demo.codeIndentFix($('script#init-mode').html()), 'javascript', true)
-                .addCode('Then init validation', demo.codeIndentFix($('script#init-script').html()), 'javascript', true);
+                .addCode('1. Init laraval (only once per view)', "{!! Laraval::init($defaults = []) !!}", 'php', true)
+                .addCode('Generates init code:', demo.codeIndentFix($('script#init-laraval').html()), 'javascript', true)
+                .addCode('2. Create validator (can use multiple times)', "{!! Laraval::create(\n  $strategy = 'local', \n  $selector = 'form#demo-form-laraval', \n  $rules = [], \n  $options = []\n) !!}", 'php', true)
+                .addCode('Generates validator', demo.codeIndentFix($('script#init-script').html()), 'javascript', true);
             demo.generatedData().then(function (data) {
                 _this.generated = data;
                 _this.bindButtons();

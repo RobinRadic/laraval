@@ -9,7 +9,7 @@ namespace Radic\Laraval\Http\Controllers\Demo;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Radic\Laraval\Traits\ValidatesWithLaraval;
+use Radic\Laraval\Contracts\Factory;
 
 /**
  * This is the DemoController.
@@ -22,7 +22,6 @@ use Radic\Laraval\Traits\ValidatesWithLaraval;
 class DemoController extends Controller
 {
     use ValidatesRequests;
-    use ValidatesWithLaraval;
 
     /**
      * @var array
@@ -36,7 +35,6 @@ class DemoController extends Controller
         'born'          => 'required|date|after:1/1/2000',
         'died'          => 'required|date|after:born',
         'between_dates' => 'after:1/1/2000|before:1/1/2010|date',
-
         'email'    => 'required|email',
         'url'      => 'required|url',
         'is_admin' => 'boolean',
@@ -44,14 +42,14 @@ class DemoController extends Controller
     ];
 
     /**
-     * @var \Radic\Laraval\ValidationMode
+     * @var \Radic\Laraval\Factory
      */
     protected $laraval;
 
-    public function __construct($mode)
+    public function __construct(Factory $factory)
     {
         require_once(realpath(__DIR__ . '/macros.php'));
-        $this->laraval = $this->makeLaraval($mode, $this->rules);
+        $this->laraval = $factory;
 
     }
 
