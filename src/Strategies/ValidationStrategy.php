@@ -6,7 +6,7 @@
  */
 namespace Radic\Laraval\Strategies;
 
-use Caffeinated\Beverage\Filesystem;
+use Sebwite\Support\Filesystem;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Support\Collection;
@@ -28,7 +28,7 @@ abstract class ValidationStrategy
     protected $factory;
 
     /**
-     * @var \Caffeinated\Beverage\Filesystem
+     * @var \Sebwite\Support\Filesystem
      */
     protected $files;
 
@@ -72,7 +72,7 @@ abstract class ValidationStrategy
      *
      * @param \Radic\Laraval\Contracts\Factory|\Radic\Laraval\Factory $factory
      * @param \Illuminate\Contracts\Container\Container               $container
-     * @param \Caffeinated\Beverage\Filesystem                        $files
+     * @param \Sebwite\Support\Filesystem                        $files
      * @param \Illuminate\Contracts\View\Factory                      $viewFactory
      * @param \Illuminate\Contracts\Validation\Factory                $validationFactory
      * @param \Illuminate\Contracts\Routing\ResponseFactory           $responseFactory

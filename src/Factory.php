@@ -6,7 +6,7 @@
  */
 namespace Radic\Laraval;
 
-use Caffeinated\Beverage\Filesystem;
+use Sebwite\Support\Filesystem;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -30,7 +30,7 @@ class Factory implements LaravalContract
     protected $container;
 
     /**
-     * @var \Caffeinated\Beverage\Filesystem
+     * @var \Sebwite\Support\Filesystem
      */
     protected $files;
 
@@ -54,7 +54,7 @@ class Factory implements LaravalContract
     /** Instantiates the class
      *
      * @param \Illuminate\Contracts\Container\Container  $container
-     * @param \Caffeinated\Beverage\Filesystem           $files
+     * @param \Sebwite\Support\Filesystem           $files
      * @param \Illuminate\Contracts\Config\Repository    $configRepository
      * @param \Illuminate\Contracts\Routing\UrlGenerator $url
      */

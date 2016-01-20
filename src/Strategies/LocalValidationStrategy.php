@@ -6,7 +6,7 @@
  */
 namespace Radic\Laraval\Strategies;
 
-use Caffeinated\Beverage\Path;
+use Sebwite\Support\Path;
 
 /**
  * This is the LocalValidationMode.

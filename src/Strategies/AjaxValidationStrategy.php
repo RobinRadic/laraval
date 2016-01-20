@@ -6,7 +6,7 @@
  */
 namespace Radic\Laraval\Strategies;
 
-use Caffeinated\Beverage\Arr;
+use Sebwite\Support\Arr;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Http\Request;

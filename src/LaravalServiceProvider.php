@@ -24,8 +24,7 @@ class LaravalServiceProvider extends ServiceProvider
 
     protected $providers = [
         \Sebwite\Support\SupportServiceProvider::class,
-        \Radic\Laraval\Providers\ConsoleServiceProvider::class,
-        \Radic\Laraval\Providers\RouteServiceProvider::class
+        Providers\RouteServiceProvider::class
     ];
 
     protected $provides = [ 'laraval' ];
