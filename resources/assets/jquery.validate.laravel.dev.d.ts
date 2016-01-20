@@ -48,14 +48,18 @@ declare module laraval {
     }
     interface LaravalOptions {
         enabled?: boolean;
-        mode?: string;
+        strategy?: string;
         dataAttribute?: string;
-        config?: any;
+        messages?: {
+            [ruleName: string]: string;
+        };
         url?: string;
-        ajaxSettings?: JQueryAjaxSettings;
+        singleFieldReferenceKey?: string;
         crsfTokenKey?: string;
         crsfToken(validator: any): string;
-        singleFieldReferenceKey?: string;
+        ajaxSettings?: JQueryAjaxSettings;
+        formValidationSuccess(response: any, errors: any): void;
+        elementValidationSuccess(response: any, errors: any): void;
     }
     function convertRule(element: HTMLInputElement, rule: LaravalRule): any;
     function parseRules(rules?: string): Array<LaravalRule>;

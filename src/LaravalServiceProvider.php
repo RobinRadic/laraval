@@ -2,7 +2,7 @@
 
 namespace Radic\Laraval;
 
-use Caffeinated\Beverage\ServiceProvider;
+use Sebwite\Support\ServiceProvider;
 
 /**
  * The main service provider
@@ -23,7 +23,7 @@ class LaravalServiceProvider extends ServiceProvider
     protected $assetDirs = [ 'assets' => 'laraval' ];
 
     protected $providers = [
-        \Caffeinated\Beverage\BeverageServiceProvider::class,
+        \Sebwite\Support\SupportServiceProvider::class,
         \Radic\Laraval\Providers\ConsoleServiceProvider::class,
         \Radic\Laraval\Providers\RouteServiceProvider::class
     ];

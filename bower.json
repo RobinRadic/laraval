@@ -33,17 +33,17 @@
     "run"
   ],
   "devDependencies": {
-    "jquery": "~2.1.4",
-    "jquery.validate": "~1.13.0",
-    "jquery-form": "~3.46.0",
-    "jquery-mockjax": "~2.0.1",
-    "bootstrap": "~3.3.5",
-    "jquery-ui": "~1.11.4",
-    "highlightjs": "~8.8.0",
-    "lodash": "~3.10.1",
-    "jquery.slimscroll": "~1.3.6"
+    "jquery": "2.1.4",
+    "jquery.validate": "1.13.0",
+    "jquery-form": "3.46.0",
+    "jquery-mockjax": "2.0.1",
+    "bootstrap": "3.3.5",
+    "jquery-ui": "1.11.4",
+    "highlightjs": "8.8.0",
+    "lodash": "3.10.1",
+    "jquery.slimscroll": "1.3.6"
   },
   "dependencies": {
-    "bootswatch": "~3.3.5+4"
+    "bootswatch": "3.3.5+4"
   }
 }

@@ -3,7 +3,6 @@ var path = require('path'),
     fs   = require('fs');
 
 var grunt = require('grunt');
-var lib = require('./lib');
 
 
 
@@ -86,17 +85,6 @@ module.exports = function (_grunt) {
 
 
     [
-        ['gen:json', 'Generate json', function () {
-            var taskDone = this.async();
-            grunt.log.writeln('Downloading schema data. Please hold on...');
-            lib.getSchema('radic', {
-                count: 1000
-            }).then(function (data) {
-                fs.writeFileSync(schemaPath, JSON.stringify(data));
-                grunt.log.ok('Schema data saved to ' + schemaPath);
-                taskDone();
-            })
-        }],
         ['build:dev', 'Build dev version', ['ts:dev', 'umd:validator']],
         ['build:demo', 'Build demo stuff', ['ts:demo', 'sass:demo']],
         ['build', 'Build all', ['build:dev', 'build:demo']],
