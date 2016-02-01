@@ -19,10 +19,5 @@
         "psr-4": {
             "Radic\\Laraval\\": "src/"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
     }
 }
