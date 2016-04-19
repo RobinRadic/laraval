@@ -23,7 +23,6 @@ class LaravalServiceProvider extends ServiceProvider
     protected $assetDirs = [ 'assets' => 'laraval' ];
 
     protected $providers = [
-        \Sebwite\Support\SupportServiceProvider::class,
         Providers\RouteServiceProvider::class
     ];
 

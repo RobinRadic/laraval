@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "sebwite/support": "1.0.*"
+        "sebwite/support": "1.0.*|2.0.*"
     },
     "suggest": {
         "laravelcollective/html": "Laraval provides several extensions based on the Form builders from Laravel Collective. Easy form building with awesome validation!"

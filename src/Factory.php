@@ -6,7 +6,7 @@
  */
 namespace Radic\Laraval;
 
-use Sebwite\Support\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Routing\UrlGenerator;
