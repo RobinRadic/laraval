@@ -1,12 +1,7 @@
 <?php
-/**
- * Part of the Caffeinated PHP packages.
- *
- * MIT License and copyright information bundled with this package in the LICENSE file
- */
 namespace Radic\Laraval\Strategies;
 
-use Sebwite\Support\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Support\Collection;
